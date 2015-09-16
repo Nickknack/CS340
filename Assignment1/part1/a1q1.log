@@ -1,0 +1,197 @@
+Script started on Mon Sep 14 20:20:04 2015
+Script on a049402[1]% g++ algorithmTiming1.cpp -o algTiming
+Script on a049402[2]% algTiming
+Algorithm Timing Started!
+Enter n: 16
+Enter repetitions: 10
+Enter Algorithm to be timed: 1
+Iteration counts (with algorithm): 
+231107 431312 431172 430804 431067 431321 431147 431314 431150 431327 
+Sorted iteration counts (with algorithm): 
+231107 430804 431067 431147 431150 431172 431312 431314 431321 431327 
+Selected value (with algorithm): 431172
+Elapsed time (with algorithm): 0.00231926 ms
+Iteration counts (without algorithm): 
+26757126 26768762 26759709 26767819 26759718 26768913 26759720 26768244 26758605 26768931 
+Sorted iteration counts (without algorithm): 
+26757126 26758605 26759709 26759718 26759720 26767819 26768244 26768762 26768913 26768931 
+Selected value (without algorithm): 26767819
+Elapsed time (without algorithm): 3.73583e-05 ms
+Algorithm elapsed time: 0.0022819017712098336494 ms
+Algorithm Timing Ended!
+Time again? Enter Y/N : y
+Algorithm Timing Started!
+Enter n: 64
+Enter repetitions: 10
+Enter Algorithm to be timed: 1
+Iteration counts (with algorithm): 
+24255 33171 33163 33196 33159 33168 33156 33169 33156 33167 
+Sorted iteration counts (with algorithm): 
+24255 33156 33156 33159 33163 33167 33168 33169 33171 33196 
+Selected value (with algorithm): 33167
+Elapsed time (with algorithm): 0.030150450749238701109 ms
+Iteration counts (without algorithm): 
+26756916 26768707 26760080 26768060 26759517 26768322 26759408 26768041 26759858 26768528 
+Sorted iteration counts (without algorithm): 
+26756916 26759408 26759517 26759858 26760080 26768041 26768060 26768322 26768528 26768707 
+Selected value (without algorithm): 26768041
+Elapsed time (without algorithm): 3.7357982229629731977e-05 ms
+Algorithm elapsed time: 0.030113092767009071865 ms
+Algorithm Timing Ended!
+Time again? Enter Y/N : y
+Algorithm Timing Started!
+Enter n: 256
+Enter repetitions: 10
+Enter Algorithm to be timed: 1
+Iteration counts (with algorithm): 
+204 2122 2123 2123 2123 2122 2124 2122 2123 2123 
+Sorted iteration counts (with algorithm): 
+204 2122 2122 2122 2123 2123 2123 2123 2123 2124 
+Selected value (with algorithm): 2123
+Elapsed time (with algorithm): 0.47103155911446065174 ms
+Iteration counts (without algorithm): 
+26757126 26759083 26768375 26756965 26768152 26759900 26768497 26759375 26768689 26760067 
+Sorted iteration counts (without algorithm): 
+26756965 26757126 26759083 26759375 26759900 26760067 26768152 26768375 26768497 26768689 
+Selected value (without algorithm): 26760067
+Elapsed time (without algorithm): 3.7369114210364270641e-05 ms
+Algorithm elapsed time: 0.47099419000025027904 ms
+Algorithm Timing Ended!
+Time again? Enter Y/N : y
+Algorithm Timing Started!
+Enter n: 1024
+Enter repetitions: 10
+Enter Algorithm to be timed: 1
+Iteration counts (with algorithm): 
+58 133 133 133 133 133 133 133 134 133 
+Sorted iteration counts (with algorithm): 
+58 133 133 133 133 133 133 133 133 134 
+Selected value (with algorithm): 133
+Elapsed time (with algorithm): 7.5187969924812030342 ms
+Iteration counts (without algorithm): 
+26568907 26759665 26768779 26759842 26768565 26759821 26768395 26759410 26768348 26759935 
+Sorted iteration counts (without algorithm): 
+26568907 26759410 26759665 26759821 26759842 26759935 26768348 26768395 26768565 26768779 
+Selected value (without algorithm): 26759935
+Elapsed time (without algorithm): 3.7369298542765521938e-05 ms
+Algorithm elapsed time: 7.5187596231826603344 ms
+Algorithm Timing Ended!
+Time again? Enter Y/N : y
+Algorithm Timing Started!
+Enter n: 4096
+Enter repetitions: 10
+Enter Algorithm to be timed: 1
+Iteration counts (with algorithm): 
+6 8 8 9 8 8 9 8 8 9 
+Sorted iteration counts (with algorithm): 
+6 8 8 8 8 8 8 9 9 9 
+Selected value (with algorithm): 8
+Elapsed time (with algorithm): 125 ms
+Iteration counts (without algorithm): 
+23718511 26760225 26768998 26759375 26755845 26758937 26769057 26759788 26768706 26759768 
+Sorted iteration counts (without algorithm): 
+23718511 26755845 26758937 26759375 26759768 26759788 26760225 26768706 26768998 26769057 
+Selected value (without algorithm): 26759788
+Elapsed time (without algorithm): 3.7369503824170806458e-05 ms
+Algorithm elapsed time: 124.99996263049617085 ms
+Algorithm Timing Ended!
+Time again? Enter Y/N : y
+Algorithm Timing Started!
+Enter n: 16
+Enter repetitions: 10
+Enter Algorithm to be timed: 2
+Iteration counts (with algorithm): 
+907331 1131891 1131832 1131883 1131598 1132279 1131372 1131063 1132681 1130857 
+Sorted iteration counts (with algorithm): 
+907331 1130857 1131063 1131372 1131598 1131832 1131883 1131891 1132279 1132681 
+Selected value (with algorithm): 1131832
+Elapsed time (with algorithm): 0.00088352334975508729602 ms
+Iteration counts (without algorithm): 
+26758784 26769632 26760902 26769062 26760644 26769938 26761153 26769439 26760148 26769046 
+Sorted iteration counts (without algorithm): 
+26758784 26760148 26760644 26760902 26761153 26769046 26769062 26769439 26769632 26769938 
+Selected value (without algorithm): 26769046
+Elapsed time (without algorithm): 3.7356579685357481596e-05 ms
+Algorithm elapsed time: 0.00084616677006972985508 ms
+Algorithm Timing Ended!
+Time again? Enter Y/N : y
+Algorithm Timing Started!
+Enter n: 64
+Enter repetitions: 10
+Enter Algorithm to be timed: 2
+Iteration counts (with algorithm): 
+253759 458809 460531 459538 456668 460149 458645 458367 462093 459709 
+Sorted iteration counts (with algorithm): 
+253759 456668 458367 458645 458809 459538 459709 460149 460531 462093 
+Selected value (with algorithm): 459538
+Elapsed time (with algorithm): 0.0021760986033799163512 ms
+Iteration counts (without algorithm): 
+26759359 26769845 26760494 26769721 26760369 26769778 26761006 26768784 26761404 26768358 
+Sorted iteration counts (without algorithm): 
+26759359 26760369 26760494 26761006 26761404 26768358 26768784 26769721 26769778 26769845 
+Selected value (without algorithm): 26768358
+Elapsed time (without algorithm): 3.7357539823697815729e-05 ms
+Algorithm elapsed time: 0.0021387410635562184406 ms
+Algorithm Timing Ended!
+Time again? Enter Y/N : y
+Algorithm Timing Started!
+Enter n: 256
+Enter repetitions: 10
+Enter Algorithm to be timed: 2
+Iteration counts (with algorithm): 
+108868 150461 150390 149717 149428 150465 150408 150473 149921 150447 
+Sorted iteration counts (with algorithm): 
+108868 149428 149717 149921 150390 150408 150447 150461 150465 150473 
+Selected value (with algorithm): 150408
+Elapsed time (with algorithm): 0.006648582522206265312 ms
+Iteration counts (without algorithm): 
+26758358 26768560 26758960 26767903 26757625 26767173 26759993 26767621 26759582 26768506 
+Sorted iteration counts (without algorithm): 
+26757625 26758358 26758960 26759582 26759993 26767173 26767621 26767903 26768506 26768560 
+Selected value (without algorithm): 26767173
+Elapsed time (without algorithm): 3.7359193666062529037e-05 ms
+Algorithm elapsed time: 0.0066112233285402031285 ms
+Algorithm Timing Ended!
+Time again? Enter Y/N : y
+Algorithm Timing Started!
+Enter n: 1024
+Enter repetitions: 10
+Enter Algorithm to be timed: 2
+Iteration counts (with algorithm): 
+22909 38522 38508 38523 38512 38515 38512 38519 38503 38526 
+Sorted iteration counts (with algorithm): 
+22909 38503 38508 38512 38512 38515 38519 38522 38523 38526 
+Selected value (with algorithm): 38515
+Elapsed time (with algorithm): 0.025963910164870828562 ms
+Iteration counts (without algorithm): 
+26757817 26768566 26756974 26768220 26759705 26768249 26759308 26767755 26760108 26769144 
+Sorted iteration counts (without algorithm): 
+26756974 26757817 26759308 26759705 26760108 26767755 26768220 26768249 26768566 26769144 
+Selected value (without algorithm): 26767755
+Elapsed time (without algorithm): 3.735838138088158454e-05 ms
+Algorithm elapsed time: 0.025926551783489945602 ms
+Algorithm Timing Ended!
+Time again? Enter Y/N : y
+Algorithm Timing Started!
+Enter n: 4096
+Enter repetitions: 10
+Enter Algorithm to be timed: 2
+Iteration counts (with algorithm): 
+150 9584 9586 9584 9587 9583 9586 9583 9586 9583 
+Sorted iteration counts (with algorithm): 
+150 9583 9583 9583 9584 9584 9586 9586 9586 9587 
+Selected value (with algorithm): 9584
+Elapsed time (with algorithm): 0.10434056761268781233 ms
+Iteration counts (without algorithm): 
+26767286 26760202 26769531 26760938 26769571 26760806 26769263 26760983 26769073 26760471 
+Sorted iteration counts (without algorithm): 
+26760202 26760471 26760806 26760938 26760983 26767286 26769073 26769263 26769531 26769571 
+Selected value (without algorithm): 26767286
+Elapsed time (without algorithm): 3.7359035951571634333e-05 ms
+Algorithm elapsed time: 0.10430320857673623658 ms
+Algorithm Timing Ended!
+Time again? Enter Y/N : n
+Script on a049402[3]% exit
+exit
+
+Script done on Mon Sep 14 20:27:24 2015
