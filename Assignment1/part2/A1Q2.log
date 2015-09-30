@@ -1,0 +1,11 @@
+Script started on Thu Sep 17 16:54:47 2015
+Script on a049418[1]% g__[K[K+_+[K[K+ main.cpp BinarySearchTree.cpp -o BST
+Script on a049418[2]% ./BST
+Script on a049418[3]% cat Average[K[K[K[K[K[K[K[K[K[Kls
+A1Q2.log  AverageHeights.txt  [0m[01;32mBST[0m*  BinarySearchTree.cpp  BinarySearchTree.h  main.cpp
+[mScript on a049418[4]% cat AverageHeights.txt
+4, 32, 256, 2048
+1.34375, 4.47314, 8.2484, 12.4045Script on a049418[5]% exit
+exit
+
+Script done on Thu Sep 17 16:55:34 2015
