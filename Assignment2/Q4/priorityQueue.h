@@ -16,26 +16,22 @@ struct Job
 	}
 };
 
-struct PrintQueue
-{
-	int elementCount;
-	Job a[HEAP_SIZE];
-};
-
 class PQ
 {
 private:
-	PrintQueue queue;
 	int jobID;
+    int elementCount;
+    Job a[HEAP_SIZE];
 
 public:
 	enum PriorityChange { INCREASE, DECREASE };
 
 	PQ();
+    void BuildHeap();
 
 	void List();
 	void Add(Job);
-	void Remove();
-	void ReleaseNext();
-	void ChangePriority(Job, PriorityChange);
+	void Remove(int);
+	Job ReleaseNext();
+	void ChangePriority(int, int);
 };
