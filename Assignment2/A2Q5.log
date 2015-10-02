@@ -1,0 +1,14 @@
+Script started on Thu 01 Oct 2015 08:28:37 PM CST
+]0;Q5kowalchn@kowalchn-desktop:~/Dropbox/University/Computer Science/Computer Science 340/CS340/Assignment2/Q5$ g++ main.cpp topological.cpp -o topological
+]0;Q5kowalchn@kowalchn-desktop:~/Dropbox/University/Computer Science/Computer Science 340/CS340/Assignment2/Q5$ ./topological
+ENEL387 MATH214 MATH221 STAT151 ENGL100 CS100 MATH212 MATH122 MATH111 CS130 CS110 MATH110 MATH105 
+CS487 CS170 
+CS270 CS261 CS250 CS210 
+CS271 CS361 CS345 CS381 CS340 CS330 CS310 CS306 CS230 
+CS461 CS425 CS405 CS430 CS412 CS411 CS410 CS420 CS400 CS375 CS374 CS372 CS350 
+CS402 CS470 CS473 CS305 
+
+]0;Q5kowalchn@kowalchn-desktop:~/Dropbox/University/Computer Science/Computer Science 340/CS340/Assignment2/Q5$ exit
+exit
+
+Script done on Thu 01 Oct 2015 08:29:01 PM CST
