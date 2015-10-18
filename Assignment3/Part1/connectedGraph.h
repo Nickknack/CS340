@@ -1,7 +1,7 @@
 //***************************************************************************
 //Names: Nicholas Kowalchuk, Brayden Streibal, Evan Boyle
 //Created: October 17th, 2015
-//Last Modified: October 17th, 2015
+//Last Modified: October 18th, 2015
 //Purpose: 
 //***************************************************************************
 
@@ -15,9 +15,13 @@ using namespace std;
 
 const int NODEAMOUNT = 15;
 
+struct Leader;
+struct Follower;
+
 struct Leader
 {
 	int vertex;
+	float weight;
 	Follower* firstFollower;
 };
 
@@ -36,4 +40,20 @@ void CarlyRaeConnectedGraph(Leader graph[], ifstream& input);
 	//Return: N/A
 	//Side Effect: The array called graph being passed in will now contain the graph that was generated based
 	//             on the input file.
+
+void VertexWeightTraversal(Leader graph[]);
+	//purpose: Traverses the graph and determines each vertex's weight.
+	//Parameter(s): an array of leader called graph; this is the graph we are traversing.
+	//Precondition(s): The graph has been built (using CarlyRaeConnectedGraph). 
+	//Return: N/A
+	//Side Effect: The weight value of each vertex in the graph Array will be set to the appropriate weight
+	//             based on the followers of each vertex. 
+
+void PrintConnectedGraph(Leader graph[]);
+	//purpose: Traverse the graph and print out the values;
+	//Parameter(s): an array of leader called graph; this is the graph we are traversing.
+	//Precondition(s): The graph has been built (using CarlyRaeConnectedGraph). 
+	//Return: N/A
+	//Side Effect: The values of the graph will be printed to the screen.
+
 #endif
