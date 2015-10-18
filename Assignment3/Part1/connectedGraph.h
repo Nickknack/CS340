@@ -56,4 +56,22 @@ void PrintConnectedGraph(Leader graph[]);
 	//Return: N/A
 	//Side Effect: The values of the graph will be printed to the screen.
 
+void CreateTransitionMatrix(Leader graph[], float transitionMatrix[][(NODEAMOUNT + 1)]);
+	//purpose: Create a transition matrix of the weights
+	//         in the form of a 2D array based on the connected graph;
+	//Parameter(s): an array of leader called graph; this is the graph we are traversing.
+	//				a 2D array of floats called transtionMatrix which will be the transition
+	//				matrix based on the weights of the vertexes in the graph array.
+	//Precondition(s): The graph has been built (using CarlyRaeConnectedGraph) and the weights
+	//				   have been set with the VertexWeightTraversal function.
+	//Return: N/A
+	//Side Effect: transitionMatrix array will contain the approriate weight values.
+
+void WriteTransitionMatrix(float transitionMatrix[][(NODEAMOUNT + 1)], ofstream& outFile);
+	//purpose: Write the transition matrix to an output file.
+	//Parameter(s): a 2D array of floats which is the transitionMatrix
+	//Precondition(s): The transitionMatrix has been built with the CreatetransitionMatrix function.
+	//Return: N/A
+	//Side Effect: the output file will contain the transition
+
 #endif
