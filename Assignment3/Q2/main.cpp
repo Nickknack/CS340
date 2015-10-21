@@ -11,14 +11,11 @@ TaySwiftBinaryTree encodingTree;
 PCTreeNode HuffmansPrefixCode(PriorityQueue q)
 {
 	int n = q.GetSize();
-
-	for (int i = 1; i < n - 1; i++)
+	for (int i = 1; i < n; i++)
 	{
-		PCTreeNode* t1 = new PCTreeNode;
-		t1 = &q.DeleteMin();
-		PCTreeNode* t2 = new PCTreeNode;
-		t2 = &q.DeleteMin();
-		PCTreeNode* t = new PCTreeNode;
+		PCTreeNode* t1 = new PCTreeNode(q.DeleteMin());
+		PCTreeNode* t2 = new PCTreeNode(q.DeleteMin());
+		PCTreeNode* t = new PCTreeNode();
 		t->left = t1;
 		t->right = t2;
 		t->character = CHAR_MAX;
@@ -29,21 +26,25 @@ PCTreeNode HuffmansPrefixCode(PriorityQueue q)
 	return toRet;
 }
 
-void TransferEncoding(PCTreeNode* Huffmans, TaySwiftBinaryTree& encodingTree, char code)
+void TransferEncoding(PCTreeNode* Huffmans, int code)
 {
+	// If node is leaf, set its code
+	if (Huffmans->left == NULL && Huffmans->right == NULL)
+	{
+		//Huffmans->code = code;
+		encodingTree.Insert(Huffmans->character, code);
+		//cout << Huffmans->character << "\t" << Huffmans->code << endl;
+		return;
+	}
+	// Otherwise, recursively go down on both branches if possible
 	if (Huffmans->left != NULL)
 	{
-		TransferEncoding(Huffmans->left, encodingTree, '0' + code);
+		TransferEncoding(Huffmans->left, (code << 1));
 	}
-	else if (Huffmans->right != NULL)
+	if (Huffmans->right != NULL)
 	{
-		TransferEncoding(Huffmans->right, encodingTree, '1' + code);
+		TransferEncoding(Huffmans->right, (code << 1)+1);
 	}
-}
-
-void TransferEncoding(PCTreeNode* Huffmans, TaySwiftBinaryTree& encodingTree)
-{
-	TransferEncoding(Huffmans, encodingTree, NULL);
 }
 
 void Compress(string filename)
@@ -76,12 +77,10 @@ void Compress(string filename)
 	pq.BuildFromArray(tempArr, tempArrSize);
 
 	// Generate the optimal prefix code tree using Huffman’s PrefixCode algorithm.
-	PCTreeNode Nuffmans = HuffmansPrefixCode(pq);
+	PCTreeNode Huffmans = HuffmansPrefixCode(pq);
 
 	// Traverse the prefix code tree and transfer the encoding scheme to the binary search tree.
-	// DOESNT FUCKING WORK
-	TransferEncoding(&Nuffmans, encodingTree);
-	// ===================
+	TransferEncoding(&Huffmans, 0);
 
 	inData.open(filename.c_str());
 	if (!inData)
@@ -105,7 +104,9 @@ void Compress(string filename)
 	{
 		char c;
 		inData >> c;
-		outData << encodingTree.Find(c);
+		// Find is broken?
+		int val = encodingTree.Find(c);
+		outData << val;
 	}
 	inData.close();
 	outData.close();
@@ -133,17 +134,17 @@ void Decompress(string filename)
 	// Loop through each character in file, search if it is a code in the tree
 	// If it is, write the character to the decompressed file
 	// Otherwise, add the character to a string, and repeat.
-	string codeToFind = "";
+	int codeToFind = 0;
 	while (!inData.eof())
 	{
 		char c;
 		inData >> c;
-		codeToFind += c;
+		(codeToFind << 1)+c;
 		char character = encodingTree.Find(codeToFind);
 		if (character != NULL)
 		{
 			outData << character;
-			codeToFind == "";
+			codeToFind = 0;
 		}
 	}
 	inData.close();
