@@ -12,15 +12,15 @@ TaySwiftBinaryTree::~TaySwiftBinaryTree()
 
 void TaySwiftBinaryTree::Insert(char val)
 {
-	Insert(val, "", root);
+	Insert(val, 0, root);
 }
 
-void TaySwiftBinaryTree::Insert(char val, string code)
+void TaySwiftBinaryTree::Insert(char val, int code)
 {
 	Insert(val, code, root);
 }
 
-void TaySwiftBinaryTree::Insert(char val, string code, PCTreeNode*& tree)
+void TaySwiftBinaryTree::Insert(char val, int code, PCTreeNode*& tree)
 {
     if (tree == NULL) // Add new node
     {
@@ -33,11 +33,11 @@ void TaySwiftBinaryTree::Insert(char val, string code, PCTreeNode*& tree)
     }
     else if (val < tree->character) // Node is smaller than root
     {
-		Insert(val, "", tree->left);
+		Insert(val, 0, tree->left);
     }
 	else if (val > tree->character) // Node is greater than root
     {
-		Insert(val, "", tree->right);
+		Insert(val, 0, tree->right);
     }
     else // Node is the same
     {
@@ -45,18 +45,18 @@ void TaySwiftBinaryTree::Insert(char val, string code, PCTreeNode*& tree)
     }
 }
 
-string TaySwiftBinaryTree::Find(char item) const
+int TaySwiftBinaryTree::Find(char item) const
 {
-	string found;
+	int found;
 	Find(root, item, found);
 	return found;
 }
 
-void TaySwiftBinaryTree::Find(PCTreeNode* tree, char item, string& found) const
+void TaySwiftBinaryTree::Find(PCTreeNode* tree, char item, int& found) const
 // Recursively searches tree for item
 {
 	if (tree == NULL)
-		found = "";
+		return;
 	else if (item < tree->character)
 		Find(tree->left, item, found);
 	else if (item > tree->character)
@@ -68,14 +68,14 @@ void TaySwiftBinaryTree::Find(PCTreeNode* tree, char item, string& found) const
 	}
 }
 
-char TaySwiftBinaryTree::Find(string item) const
+char TaySwiftBinaryTree::Find(int item) const
 {
 	char found;
 	Find(root, item, found);
 	return found;
 }
 
-void TaySwiftBinaryTree::Find(PCTreeNode* tree, string item, char& found) const
+void TaySwiftBinaryTree::Find(PCTreeNode* tree, int item, char& found) const
 // Recursively searches tree for item
 {
 	if (tree == NULL)

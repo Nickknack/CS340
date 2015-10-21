@@ -17,6 +17,7 @@ public:
 	void BuildFromArray(PCTreeNode arr[], int size);
 	PCTreeNode DeleteMin();
 	int GetSize() const;
+	void Insert(PCTreeNode t);
 	void Insert(PCTreeNode* t);
 };
 

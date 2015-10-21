@@ -9,6 +9,9 @@ PriorityQueue::PriorityQueue(int maxSize)
 	{
 		a[i].character = NULL;
 		a[i].frequency = 0;
+		a[i].code = 0;
+		a[i].left = NULL;
+		a[i].right = NULL;
 	}
 }
 
@@ -53,6 +56,9 @@ void PriorityQueue::BuildFromArray(PCTreeNode arr[], int size)
 	for (int i = 0; i < size; i++)
 	{
 		a[i+1] = arr[i];
+		a[i + 1].code = 0;
+		a[i + 1].left = NULL;
+		a[i + 1].right = NULL;
 	}
 	elementCount = size;
 	BuildHeap();
@@ -64,7 +70,6 @@ PCTreeNode PriorityQueue::DeleteMin()
 	PCTreeNode toRet = a[1];
 	a[1] = a[elementCount];
 	elementCount--;
-
 	PCTreeNode temp = a[1]; // Copy parent
 	int i = 1;
 	while (i * 2 <= elementCount) // Loop through each child
@@ -92,18 +97,26 @@ int PriorityQueue::GetSize() const
 	return elementCount;
 }
 
-void PriorityQueue::Insert(PCTreeNode* t)
+void PriorityQueue::Insert(PCTreeNode t)
 {
 	elementCount++;
 	int i = elementCount;
 	// Check if parent is lower priority, swap if so
-	while (i > 1 && t->frequency < a[i / 2].frequency)
+	while (i > 1 && t.frequency < a[i / 2].frequency)
 	{
 		a[i] = a[i / 2];
 		i = i / 2;
 	}
-	a[i].character = t->character;
-	a[i].frequency = t->frequency;
-	a[i].left = t->left;
-	a[i].right = t->right;
+	a[i] = t;
+}
+
+void PriorityQueue::Insert(PCTreeNode* t)
+{
+	PCTreeNode temp;
+	temp.character = t->character;
+	temp.code = t->code;
+	temp.frequency = t->frequency;
+	temp.left = t->left;
+	temp.right = t->right;
+	Insert(temp);
 }
