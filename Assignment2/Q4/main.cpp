@@ -18,15 +18,15 @@ int main()
 
 		switch (cmd)
 		{
-            case '1':
+            case '1': // List queue
                 printQueue.List();
                 break;
-            case '2':
+            case '2': // Insert to queue
                 cout << "Filename: ";
                 cin >> toAdd.filename;
                 cout << "File Size: ";
                 cin >> toAdd.fileSize;
-                while (1)
+                while (1) // Ensure priority is within 1-3
                 {
                     cout << "Priority: ";
                     cin >> toAdd.priority;
@@ -38,18 +38,18 @@ int main()
                 }
                 printQueue.Add(toAdd);
                 break;
-            case '3':
+            case '3': // Delete job
                 cout << "What job do you want to remove? ";
                 cin >> jobID;
                 printQueue.Remove(jobID);
                 break;
-            case '4':
+            case '4': // Delete Min
                 printQueue.ReleaseNext();
                 break;
-            case '5':
+            case '5': // Change priority
                 cout << "What job do you want to edit? ";
                 cin >> jobID;
-                while (1)
+                while (1) // Ensure priority is within 1-3
                 {
                     cout << "What is the new priority? ";
                     cin >> newPriority;
@@ -61,7 +61,7 @@ int main()
                 }
                 printQueue.ChangePriority(jobID, newPriority);
                 break;
-            case 'q':
+            case 'q': // Quit
             case 'Q':
                 return 0;
             default:
