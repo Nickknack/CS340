@@ -52,6 +52,33 @@ void TopologicalSort(ifstream& input)
 		input >> x;
 	}
 
+	p = head;
+
+
+	//Prints out the structure of the strutcure each leader at a time, as per assignment
+	cout << endl << "*****INPUT PHASE****" << endl << endl;
+	for (int j = 0; j < elementCount; j++)
+	{
+		q = p->nextLeader;
+		cout << "Leader " << (j + 1) << " " << endl;
+		cout << "     element = " << p->element << endl;
+		cout << "     inDegree = " << p->inDegree << endl;
+		cout << "     nextLeader = " << q->element << endl;
+
+		f = p->firstFollower;
+		i = 0;
+		while (f != NULL)
+		{
+			i++;
+			q = f->adjacentLeader;
+			cout << "     Follower " << i << " =" << q->element << endl;
+			f = f->nextFollower;
+		}
+
+		p = p->nextLeader;
+		cout << endl;
+	}
+
 	//set p to point to head, head to point to NULL, and r to point at tail
 	p = head;
 	head = NULL;
@@ -88,6 +115,8 @@ void TopologicalSort(ifstream& input)
 	//set q to the head and r to the tail so that the list can be printed. 
 	q = head;
 	r = tail;
+
+	cout << endl << endl << "*****OUTPUT PHASE*****" << endl << endl;
 
 	//Traverse the list, printing out the order.
 	while (q != NULL)

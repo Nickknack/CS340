@@ -1,0 +1,25 @@
+Script started on Sun 18 Oct 2015 04:22:49 PM CST
+]0;Part1kowalchn@kowalchn-desktop:~/Dropbox/University/Computer Science/Computer Sciience 340/CS340/Assignment3/Part1$ g++ connectedGraphMain.cpp connectedGrap h.cpp -0[Ko connected
+]0;Part1kowalchn@kowalchn-desktop:~/Dropbox/University/Computer Science/Computer Sciience 340/CS340/Assignment3/Part1$ ./connected
+]0;Part1kowalchn@kowalchn-desktop:~/Dropbox/University/Computer Science/Computer Sciience 340/CS340/Assignment3/Part1$ g++ eigenMain.cpp eigenvector.cpp -o eig en
+]0;Part1kowalchn@kowalchn-desktop:~/Dropbox/University/Computer Science/Computer Sciience 340/CS340/Assignment3/Part1$ ./eigen
+2.440023e-01 
+4.787480e-01 
+3.310206e-01 
+3.655735e-01 
+3.255550e-01 
+3.676836e-01 
+3.190260e-01 
+1.853867e-01 
+1.903101e-01 
+1.542627e-01 
+5.425925e-02 
+8.138886e-02 
+8.138883e-02 
+9.766659e-02 
+7.053701e-02 
+
+]0;Part1kowalchn@kowalchn-desktop:~/Dropbox/University/Computer Science/Computer Sciience 340/CS340/Assignment3/Part1$ exitr[K
+exit
+
+Script done on Sun 18 Oct 2015 04:23:46 PM CST
