@@ -6,7 +6,7 @@ using namespace std;
 
 struct PCTreeNode {
 	char character;
-	int code;
+	string code;
 	int frequency;
 	PCTreeNode* left;
 	PCTreeNode* right;

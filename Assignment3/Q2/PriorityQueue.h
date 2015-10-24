@@ -1,7 +1,8 @@
 #ifndef PriorityQueue_h
 #define PriorityQueue_h
 
-#include <stdio.h>
+#include <iostream>
+using namespace std;
 #include "Elements.h"
 
 class PriorityQueue
@@ -19,6 +20,9 @@ public:
 	int GetSize() const;
 	void Insert(PCTreeNode t);
 	void Insert(PCTreeNode* t);
+    bool Find(string item, char& code) const;
+private:
+    void Find(int i, string item, char& code, bool& found) const;
 };
 
 #endif /* PriorityQueue_h */
