@@ -12,15 +12,15 @@ TaySwiftBinaryTree::~TaySwiftBinaryTree()
 
 void TaySwiftBinaryTree::Insert(char val)
 {
-	Insert(val, 0, root);
+	Insert(val, "", root);
 }
 
-void TaySwiftBinaryTree::Insert(char val, int code)
+void TaySwiftBinaryTree::Insert(char val, string code)
 {
 	Insert(val, code, root);
 }
 
-void TaySwiftBinaryTree::Insert(char val, int code, PCTreeNode*& tree)
+void TaySwiftBinaryTree::Insert(char val, string code, PCTreeNode*& tree)
 {
     if (tree == NULL) // Add new node
     {
@@ -33,62 +33,64 @@ void TaySwiftBinaryTree::Insert(char val, int code, PCTreeNode*& tree)
     }
     else if (val < tree->character) // Node is smaller than root
     {
-		Insert(val, 0, tree->left);
+		Insert(val, code, tree->left);
     }
 	else if (val > tree->character) // Node is greater than root
     {
-		Insert(val, 0, tree->right);
-    }
-    else // Node is the same
-    {
-		tree->frequency++;
+		Insert(val, code, tree->right);
     }
 }
 
-int TaySwiftBinaryTree::Find(char item) const
+bool TaySwiftBinaryTree::Find(char item, string& code) const
 {
-	int found;
-	Find(root, item, found);
+	bool found;
+	Find(root, item, code, found);
 	return found;
 }
 
-void TaySwiftBinaryTree::Find(PCTreeNode* tree, char item, int& found) const
+void TaySwiftBinaryTree::Find(PCTreeNode* tree, char item, string& code, bool& found) const
 // Recursively searches tree for item
 {
 	if (tree == NULL)
 		return;
 	else if (item < tree->character)
-		Find(tree->left, item, found);
+		Find(tree->left, item, code, found);
 	else if (item > tree->character)
-		Find(tree->right, item, found);
+		Find(tree->right, item, code, found);
 	else
 	{
-		item = tree->character;
-		found = tree->code;
+        found = true;
+		code = tree->code;
 	}
 }
 
-char TaySwiftBinaryTree::Find(int item) const
+bool TaySwiftBinaryTree::Find(string item, char& code) const
 {
-	char found;
-	Find(root, item, found);
+	bool found;
+	Find(root, item, code, found);
 	return found;
 }
 
-void TaySwiftBinaryTree::Find(PCTreeNode* tree, int item, char& found) const
+void TaySwiftBinaryTree::Find(PCTreeNode* tree, string item, char& code, bool& found) const
 // Recursively searches tree for item
 {
-	if (tree == NULL)
-		found = NULL;
-	else if (item < tree->code)
-		Find(tree->left, item, found);
-	else if (item > tree->code)
-		Find(tree->right, item, found);
-	else
-	{
-		item = tree->code;
-		found = tree->character;
-	}
+    cout << item << "\t" << item[0] << endl;
+    if (tree == NULL)
+        return;
+	else if (item[0] == '0')
+    {
+        Find(tree->left, item.substr(1), code, found);
+    }
+	else if (item[0] == '1')
+    {
+        Find(tree->right, item.substr(1), code, found);
+    }
+    else if (tree->left == NULL && tree->right == NULL)
+    {
+        found = true;
+        code = tree->character;
+        return;
+    }
 }
 
 int TaySwiftBinaryTree::CountNodes() const
@@ -126,7 +128,7 @@ void TaySwiftBinaryTree::Print(PCTreeNode* tree, int level) const
         Print(tree->right, level+1);
         for (i = 0; i < level; i++)
             cout << "\t";
-		cout << " " << tree->character << "(" << tree->frequency << ")";
+		cout << " " << tree->character << "(" << tree->code << ")";
         if ( (tree->left != NULL) && (tree->right != NULL))
             cout << "<";
         else if (tree->right != NULL)

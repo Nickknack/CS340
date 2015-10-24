@@ -9,7 +9,7 @@ PriorityQueue::PriorityQueue(int maxSize)
 	{
 		a[i].character = NULL;
 		a[i].frequency = 0;
-		a[i].code = 0;
+		a[i].code = "";
 		a[i].left = NULL;
 		a[i].right = NULL;
 	}
@@ -56,7 +56,7 @@ void PriorityQueue::BuildFromArray(PCTreeNode arr[], int size)
 	for (int i = 0; i < size; i++)
 	{
 		a[i+1] = arr[i];
-		a[i + 1].code = 0;
+		a[i + 1].code = "";
 		a[i + 1].left = NULL;
 		a[i + 1].right = NULL;
 	}
@@ -119,4 +119,31 @@ void PriorityQueue::Insert(PCTreeNode* t)
 	temp.left = t->left;
 	temp.right = t->right;
 	Insert(temp);
+}
+
+bool PriorityQueue::Find(string item, char& code) const
+{
+    bool found;
+    Find(1, item, code, found);
+    return found;
+}
+
+void PriorityQueue::Find(int i, string item, char& code, bool& found) const
+// Recursively searches tree for item
+{
+    cout << item << "\t" << item[0] << endl;
+    if (item[0] == '0')
+    {
+        Find(i*2, item.substr(1), code, found);
+    }
+    else if (item[0] == '1')
+    {
+        Find((i*2)+1, item.substr(1), code, found);
+    }
+    else
+    {
+        found = true;
+        code = a[i].character;
+        return;
+    }
 }

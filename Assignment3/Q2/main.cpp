@@ -1,12 +1,14 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <stdlib.h>
 using namespace std;
 
 #include "TaySwiftBinaryTree.h"
 #include "PriorityQueue.h"
 
 TaySwiftBinaryTree encodingTree;
+PCTreeNode HuffmansEncodingTree;
 
 PCTreeNode HuffmansPrefixCode(PriorityQueue q)
 {
@@ -26,24 +28,24 @@ PCTreeNode HuffmansPrefixCode(PriorityQueue q)
 	return toRet;
 }
 
-void TransferEncoding(PCTreeNode* Huffmans, int code)
+void TransferEncoding(PCTreeNode* Huffmans, string code)
 {
 	// If node is leaf, set its code
 	if (Huffmans->left == NULL && Huffmans->right == NULL)
 	{
-		//Huffmans->code = code;
-		encodingTree.Insert(Huffmans->character, code);
-		//cout << Huffmans->character << "\t" << Huffmans->code << endl;
+        Huffmans->code = code;
+        //cout << Huffmans->character << " : " << code << endl;
+        encodingTree.Insert(Huffmans->character, code);
 		return;
 	}
 	// Otherwise, recursively go down on both branches if possible
 	if (Huffmans->left != NULL)
 	{
-		TransferEncoding(Huffmans->left, (code << 1));
+		TransferEncoding(Huffmans->left, "0"+code);
 	}
 	if (Huffmans->right != NULL)
 	{
-		TransferEncoding(Huffmans->right, (code << 1)+1);
+		TransferEncoding(Huffmans->right, "1"+code);
 	}
 }
 
@@ -75,12 +77,12 @@ void Compress(string filename)
 	// Convert the array into a priority queue by using the BuildHeap algorithm.
 	PriorityQueue pq(255);
 	pq.BuildFromArray(tempArr, tempArrSize);
-
-	// Generate the optimal prefix code tree using Huffman’s PrefixCode algorithm.
-	PCTreeNode Huffmans = HuffmansPrefixCode(pq);
+    
+	// Generate the optimal prefix code tree using Huffman's PrefixCode algorithm.
+	HuffmansEncodingTree = HuffmansPrefixCode(pq);
 
 	// Traverse the prefix code tree and transfer the encoding scheme to the binary search tree.
-	TransferEncoding(&Huffmans, 0);
+    TransferEncoding(&HuffmansEncodingTree, "");
 
 	inData.open(filename.c_str());
 	if (!inData)
@@ -104,12 +106,27 @@ void Compress(string filename)
 	{
 		char c;
 		inData >> c;
-		// Find is broken?
-		int val = encodingTree.Find(c);
-		outData << val;
+        string code = "";
+		if (encodingTree.Find(c, code))
+        {
+            //cout << c << ": " << code << endl;
+            outData << code;
+        }
 	}
+    
+    //encodingTree.Print();
 	inData.close();
 	outData.close();
+}
+
+void PrintHuffmans(PCTreeNode* tree)
+{
+    if (tree != NULL)
+    {
+        PrintHuffmans(tree->right);
+        cout << " " << tree->character << "(" << tree->code << ")";
+        PrintHuffmans(tree->left);
+    }
 }
 
 void Decompress(string filename)
@@ -134,18 +151,37 @@ void Decompress(string filename)
 	// Loop through each character in file, search if it is a code in the tree
 	// If it is, write the character to the decompressed file
 	// Otherwise, add the character to a string, and repeat.
-	int codeToFind = 0;
+	string codeToFind = "";
+    PCTreeNode* tempTree = &HuffmansEncodingTree;
+    PrintHuffmans(tempTree);
 	while (!inData.eof())
 	{
 		char c;
 		inData >> c;
-		(codeToFind << 1)+c;
-		char character = encodingTree.Find(codeToFind);
-		if (character != NULL)
-		{
-			outData << character;
-			codeToFind = 0;
-		}
+		codeToFind += c;
+        cout << codeToFind << " : " << c << endl;
+        char characterFound;
+        if (c == '0')
+        {
+            tempTree = tempTree->left;
+        }
+        else if (c == '1')
+        {
+            tempTree = tempTree->right;
+        }
+        
+        if (tempTree->code == codeToFind)
+        {
+            cout << "FOUND " << codeToFind << ": " << characterFound << endl;
+            outData << characterFound;
+            codeToFind = "";
+        }
+        /*if (HuffmansEncodingTree.Find(codeToFind, characterFound))
+        {
+            cout << "FOUND " << codeToFind << ": " << characterFound << endl;
+            outData << characterFound;
+            codeToFind = "";
+        }*/
 	}
 	inData.close();
 	outData.close();
@@ -157,7 +193,9 @@ int main()
     cout << "Enter a filename: ";
     cin >> filename;
 
+    cout << "COMPRESSION" << endl;
 	Compress(filename);
+    cout << "DECOMPRESSION" << endl;
 	Decompress(filename);
 
 	return 0;
