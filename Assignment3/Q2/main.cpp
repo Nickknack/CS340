@@ -34,18 +34,17 @@ void TransferEncoding(PCTreeNode* Huffmans, string code)
 	if (Huffmans->left == NULL && Huffmans->right == NULL)
 	{
         Huffmans->code = code;
-        //cout << Huffmans->character << " : " << code << endl;
         encodingTree.Insert(Huffmans->character, code);
 		return;
 	}
 	// Otherwise, recursively go down on both branches if possible
 	if (Huffmans->left != NULL)
 	{
-		TransferEncoding(Huffmans->left, "0"+code);
+		TransferEncoding(Huffmans->left, code+"0");
 	}
 	if (Huffmans->right != NULL)
 	{
-		TransferEncoding(Huffmans->right, "1"+code);
+		TransferEncoding(Huffmans->right, code+"1");
 	}
 }
 
@@ -61,6 +60,7 @@ void Compress(string filename)
 
 	// Count occurances of characters in file
 	TaySwiftBinaryTree searchTree;
+	inData.unsetf(ios_base::skipws); // Allows us to read in '\n'
 	while (!inData.eof())
 	{
 		char c;
@@ -102,31 +102,42 @@ void Compress(string filename)
 	
 	// Search through tree for character to encode
 	// Write the code to output file.
+	inData.unsetf(ios_base::skipws); // Allows us to read in '\n'
 	while (!inData.eof())
 	{
 		char c;
-		inData >> c;
+		inData.get(c);
         string code = "";
 		if (encodingTree.Find(c, code))
         {
-            //cout << c << ": " << code << endl;
             outData << code;
         }
 	}
-    
-    //encodingTree.Print();
+   
 	inData.close();
 	outData.close();
 }
 
-void PrintHuffmans(PCTreeNode* tree)
+// Prints tree in tree form
+// Used for debugging
+void PrintHuffmans(PCTreeNode* tree, int level)
 {
-    if (tree != NULL)
-    {
-        PrintHuffmans(tree->right);
-        cout << " " << tree->character << "(" << tree->code << ")";
-        PrintHuffmans(tree->left);
-    }
+	int i;
+	if (tree != NULL)
+	{
+		PrintHuffmans(tree->right, level + 1);
+		for (i = 0; i < level; i++)
+			cout << "\t";
+		cout << " " << tree->character << "(" << tree->code << ")";
+		if ((tree->left != NULL) && (tree->right != NULL))
+			cout << "<";
+		else if (tree->right != NULL)
+			cout << "/";
+		else if (tree->left != NULL)
+			cout << "\\";
+		cout << endl;
+		PrintHuffmans(tree->left, level + 1);
+	}
 }
 
 void Decompress(string filename)
@@ -153,14 +164,17 @@ void Decompress(string filename)
 	// Otherwise, add the character to a string, and repeat.
 	string codeToFind = "";
     PCTreeNode* tempTree = &HuffmansEncodingTree;
-    PrintHuffmans(tempTree);
+    //PrintHuffmans(tempTree,0); // Used for debugging
+
 	while (!inData.eof())
 	{
 		char c;
 		inData >> c;
 		codeToFind += c;
-        cout << codeToFind << " : " << c << endl;
-        char characterFound;
+
+		// For each character, read in bit
+		// Move along tree until we reach the code we're looking for
+		// Reset, and repeat until EOF.
         if (c == '0')
         {
             tempTree = tempTree->left;
@@ -172,16 +186,10 @@ void Decompress(string filename)
         
         if (tempTree->code == codeToFind)
         {
-            cout << "FOUND " << codeToFind << ": " << characterFound << endl;
-            outData << characterFound;
+            outData << tempTree->character;
             codeToFind = "";
+			tempTree = &HuffmansEncodingTree;
         }
-        /*if (HuffmansEncodingTree.Find(codeToFind, characterFound))
-        {
-            cout << "FOUND " << codeToFind << ": " << characterFound << endl;
-            outData << characterFound;
-            codeToFind = "";
-        }*/
 	}
 	inData.close();
 	outData.close();

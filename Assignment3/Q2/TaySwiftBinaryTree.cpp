@@ -1,3 +1,5 @@
+#include <fstream>
+using namespace std;
 #include "TaySwiftBinaryTree.h"
 
 TaySwiftBinaryTree::TaySwiftBinaryTree()
@@ -127,15 +129,15 @@ void TaySwiftBinaryTree::Print(PCTreeNode* tree, int level) const
     {
         Print(tree->right, level+1);
         for (i = 0; i < level; i++)
-            cout << "\t";
+			cout << "\t";
 		cout << " " << tree->character << "(" << tree->code << ")";
         if ( (tree->left != NULL) && (tree->right != NULL))
-            cout << "<";
+			cout << "<";
         else if (tree->right != NULL)
-            cout << "/";
+			cout << "/";
         else if (tree->left != NULL)
-            cout << "\\";
-        cout << endl;
+			cout << "\\";
+		cout << endl;
         Print(tree->left, level+1);
     }
 }
