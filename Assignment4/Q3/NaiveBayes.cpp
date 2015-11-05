@@ -7,25 +7,25 @@ NaiveBayes::NaiveBayes(string input, string output, int rows, int columns, int u
     FILENAME_INPUT = input;
     FILENAME_OUTPUT = output;
     MAX_ROWS = rows;
-    MAX_COLUMNS = columns;
+    MAX_COLUMNS = columns+1;
     MAX_UNIQUE_VALUES = uniqueVals;
     
     // Initialization of all the arrays
-    D = new string*[rows];
-    A = new struct UniqueValues*[rows];
-    C = new int**[rows];
-    P = new float**[rows];
-    U = new string[rows];
-    for (int i = 0; i < rows; i++)
+	D = new string*[MAX_ROWS];
+	A = new struct UniqueValues*[MAX_ROWS];
+	C = new int**[MAX_ROWS];
+	P = new float**[MAX_ROWS];
+	U = new string[MAX_ROWS];
+	for (int i = 0; i < MAX_ROWS; i++)
     {
-        D[i] = new string[columns];
-        A[i] = new struct UniqueValues[columns];
-        C[i] = new int*[columns];
-        P[i] = new float*[columns];
-        for (int j = 0; j < columns; j++)
+		D[i] = new string[MAX_COLUMNS];
+		A[i] = new struct UniqueValues[MAX_COLUMNS];
+		C[i] = new int*[MAX_COLUMNS];
+		P[i] = new float*[MAX_COLUMNS];
+		for (int j = 0; j < MAX_COLUMNS; j++)
         {
-            C[i][j] = new int[uniqueVals];
-            P[i][j] = new float[uniqueVals];
+			C[i][j] = new int[MAX_UNIQUE_VALUES];
+			P[i][j] = new float[MAX_UNIQUE_VALUES];
         }
     }
 }
@@ -40,10 +40,10 @@ void NaiveBayes::Preprocessor()
             D[i][j] = "";
             A[i][j].value = "";
             A[i][j].count = 0;
-            for (k = 1; k > MAX_UNIQUE_VALUES; k++)
+            for (k = 1; k < MAX_UNIQUE_VALUES; k++)
             {
                 C[i][j][k] = 0;
-                P[i][j][k] = 0.0;
+                P[i][j][k] = 0.0f;
             }
         }
     }
@@ -73,7 +73,7 @@ void NaiveBayes::Preprocessor()
             j++;
         }
         
-        columnsInTable = j;
+        columnsInTable = j-1;
         i++;
         j = 1;
         
@@ -112,23 +112,16 @@ void NaiveBayes::Learner()
     }
     for (int i = 1; i < UniqueValues(columnsInTable); i++)
     {
-        P[i][columnsInTable][1] = A[i][columnsInTable].count / instancesInTable;
+        P[i][columnsInTable][1] = (float)A[i][columnsInTable].count / (float)instancesInTable;
+		printf("P[%i][%i][%i]: %f\n", i, columnsInTable - 1, 1, P[i][columnsInTable - 1][1]);
         for (int j = 1; j < columnsInTable - 1; j++)
         {
             for (int k = 1; k < UniqueValues(j); k++)
             {
-                P[i][j][k] = C[i][j][k] / A[i][columnsInTable].count;
-            }
-        }
-    }
-    for (int a = 0; a < MAX_ROWS; a++)
-    {
-        for (int b = 0; b < MAX_COLUMNS; b++)
-        {
-            for (int c = 0; c < MAX_UNIQUE_VALUES; c++)
-            {
-                printf("C[%i][%i][%i]: %i\n", a, b, c, C[a][b][c]);
-                printf("P[%i][%i][%i]: %f\n", a, b, c, P[a][b][c]);
+				printf("P[%i][%i][%i]: %i\n", i, j, k, C[i][j][k]);
+				printf("P[%i][%i]: %i\n", i, columnsInTable, A[i][columnsInTable].count);
+                P[i][j][k] = (float)C[i][j][k] / (float)A[i][columnsInTable].count;
+				printf("P[%i][%i][%i]: %f\n", i, j, k, P[i][j][k]);
             }
         }
     }
@@ -136,21 +129,20 @@ void NaiveBayes::Learner()
 
 string NaiveBayes::Classifier()
 {
-    int n = columnsInTable;
-    float p = 0.0;
+    float p = 0.0f;
     string c;
-    for (int i = 1; i < UniqueValues(n); i++)
+	for (int i = 1; i < UniqueValues(columnsInTable); i++)
     {
-        float pTemp = P[i][n][1];
-        for (int j = 1; j < n - 1; j++)
+		float pTemp = P[i][columnsInTable][1];
+		for (int j = 1; j < columnsInTable - 1; j++)
         {
             int k = XRefU(j);
-            pTemp = pTemp * P[i][j][k];
+            pTemp = pTemp * P[i][j][k]; // P[i,j,k] typo in asst?
         }
         if (pTemp > p)
         {
             p = pTemp;
-            c = A[i][n].value;
+			c = A[i][columnsInTable].value;
         }
     }
     return c;
