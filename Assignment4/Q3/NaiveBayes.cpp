@@ -2,13 +2,14 @@
 #include <sstream>
 using namespace std;
 
-NaiveBayes::NaiveBayes(string input, string output, int rows, int columns, int uniqueVals)
+NaiveBayes::NaiveBayes(string learn, string classify, string output, int rows, int columns, int uniqueVals)
 {
-    FILENAME_INPUT = input;
+    FILENAME_INPUT_LEARN = learn;
+    FILENAME_INPUT_CLASSIFY = classify;
     FILENAME_OUTPUT = output;
-    MAX_ROWS = rows;
+    MAX_ROWS = rows+1;
     MAX_COLUMNS = columns+1;
-    MAX_UNIQUE_VALUES = uniqueVals;
+    MAX_UNIQUE_VALUES = uniqueVals+1;
     
     // Initialization of all the arrays
 	D = new string*[MAX_ROWS];
@@ -51,10 +52,10 @@ void NaiveBayes::Preprocessor()
     j = 1;
     
     ifstream fin;
-    fin.open(FILENAME_INPUT.c_str());
+    fin.open(FILENAME_INPUT_LEARN.c_str());
     if (!fin)
     {
-        printf("Error opening %s\n", FILENAME_INPUT.c_str());
+        printf("Error opening %s\n", FILENAME_INPUT_LEARN.c_str());
         exit(1);
     }
     
@@ -63,6 +64,7 @@ void NaiveBayes::Preprocessor()
     // Used to read from file with multiple delimiters.
     string x;
     stringstream iss;
+    getline(fin, x); // Get rid of the headers
     while (getline(fin, x))
     {
         iss << x;
@@ -73,7 +75,7 @@ void NaiveBayes::Preprocessor()
             j++;
         }
         
-        columnsInTable = j-1;
+        columnsInTable = j - 1;
         i++;
         j = 1;
         
@@ -81,7 +83,8 @@ void NaiveBayes::Preprocessor()
         if (fin.eof()) break;
     }
     instancesInTable = i - 1;
-    
+    fin.close();
+    /*// For debugging purposes only.
     for (int a = 1; a < MAX_ROWS; a++)
     {
         for (int b = 1; b < MAX_COLUMNS; b++)
@@ -90,13 +93,14 @@ void NaiveBayes::Preprocessor()
         }
         printf("\n");
     }
+    // For debugging purposes only.
     for (int a = 1; a < MAX_ROWS; a++)
     {
         for (int b = 1; b < MAX_COLUMNS; b++)
         {
             printf("A[%i][%i]: v:%s, c:%i\n", a, b, A[a][b].value.c_str(), A[a][b].count);
         }
-    }
+    }*/
 }
 
 void NaiveBayes::Learner()
@@ -110,34 +114,82 @@ void NaiveBayes::Learner()
             C[i][j][k]++;
         }
     }
-    for (int i = 1; i < UniqueValues(columnsInTable); i++)
+    //printf("columnsInTable: %i, UniqueValues: %i\n", columnsInTable, UniqueValues(columnsInTable));
+    for (int i = 1; i < UniqueValues(columnsInTable) + 1; i++)
     {
         P[i][columnsInTable][1] = (float)A[i][columnsInTable].count / (float)instancesInTable;
-		printf("P[%i][%i][%i]: %f\n", i, columnsInTable - 1, 1, P[i][columnsInTable - 1][1]);
+		//printf("P[%i][%i][%i]: %f\n", i, columnsInTable, 1, P[i][columnsInTable][1]);
         for (int j = 1; j < columnsInTable - 1; j++)
         {
-            for (int k = 1; k < UniqueValues(j); k++)
+            for (int k = 1; k < UniqueValues(j) + 1; k++)
             {
-				printf("P[%i][%i][%i]: %i\n", i, j, k, C[i][j][k]);
-				printf("P[%i][%i]: %i\n", i, columnsInTable, A[i][columnsInTable].count);
+				//printf("C[%i][%i][%i]: %i\n", i, j, k, C[i][j][k]);
+				//printf("A[%i][%i]: %i\n", i, columnsInTable, A[i][columnsInTable].count);
                 P[i][j][k] = (float)C[i][j][k] / (float)A[i][columnsInTable].count;
-				printf("P[%i][%i][%i]: %f\n", i, j, k, P[i][j][k]);
+				//printf("P[%i][%i][%i]: %f\n", i, j, k, P[i][j][k]);
             }
         }
     }
 }
 
+void NaiveBayes::Classify()
+{
+    ifstream fin;
+    fin.open(FILENAME_INPUT_CLASSIFY.c_str());
+    if (!fin)
+    {
+        printf("Error opening %s\n", FILENAME_INPUT_CLASSIFY.c_str());
+        exit(1);
+    }
+    
+    ofstream fout;
+    fout.open(FILENAME_OUTPUT.c_str());
+    if (!fout)
+    {
+        printf("Error opening %s\n", FILENAME_OUTPUT.c_str());
+        exit(1);
+    }
+    
+    // Following code adapted from
+    // https://www.daniweb.com/programming/software-development/threads/53349/getline-with-multiple-delimiters
+    // Used to read from file with multiple delimiters.
+    string x;
+    stringstream iss;
+    
+    while (getline(fin, x))
+    {
+        iss << x;
+        string token, c;
+        int i = 1;
+        while (getline(iss, token, ','))
+        {
+            U[i++] = token;
+            fout << token << ",";
+        }
+        
+        c = Classifier();
+        fout << c << endl;
+        //printf("Person %i: %s\n", person++, c.c_str());
+        
+        iss.clear();
+        if (fin.eof()) break;
+    }
+    fin.close();
+    fout.close();
+}
+
 string NaiveBayes::Classifier()
 {
     float p = 0.0f;
+    float pTemp = 0.0f;
     string c;
-	for (int i = 1; i < UniqueValues(columnsInTable); i++)
+	for (int i = 1; i < UniqueValues(columnsInTable) + 1; i++)
     {
-		float pTemp = P[i][columnsInTable][1];
+		pTemp = P[i][columnsInTable][1];
 		for (int j = 1; j < columnsInTable - 1; j++)
         {
             int k = XRefU(j);
-            pTemp = pTemp * P[i][j][k]; // P[i,j,k] typo in asst?
+            pTemp = pTemp * P[i][j][k];
         }
         if (pTemp > p)
         {
@@ -172,7 +224,7 @@ int NaiveBayes::UniqueValues(int j)
 
 int NaiveBayes::XRefD(int m, int j)
 {
-    for (int i = 1; i < UniqueValues(j); i++)
+    for (int i = 1; i < UniqueValues(j) + 1; i++)
     {
         if (D[m][j] == A[i][j].value)
         {
@@ -184,7 +236,7 @@ int NaiveBayes::XRefD(int m, int j)
 
 int NaiveBayes::XRefU(int j)
 {
-    for (int i = 1; i < UniqueValues(j); i++)
+    for (int i = 1; i < UniqueValues(j) + 1; i++)
     {
         if (U[j] == A[i][j].value)
         {

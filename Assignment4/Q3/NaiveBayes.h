@@ -15,7 +15,8 @@ struct UniqueValues
 class NaiveBayes
 {
 private:
-    string FILENAME_INPUT;
+    string FILENAME_INPUT_LEARN;
+    string FILENAME_INPUT_CLASSIFY;
     string FILENAME_OUTPUT;
     int MAX_ROWS;
     int MAX_COLUMNS;
@@ -29,11 +30,12 @@ private:
     int instancesInTable;
     int columnsInTable;
 public:
-    NaiveBayes(string input, string output, int rows, int columns, int uniqueVals);
+    NaiveBayes(string learn, string classify, string output, int rows, int columns, int uniqueVals);
     void Preprocessor();
     void Learner();
-    string Classifier();
+    void Classify();
 private:
+    string Classifier();
     void BuildTables(string x, int i, int j);
     int UniqueValues(int j);
     int XRefD(int m, int j);
