@@ -1,0 +1,15 @@
+age,income,student,credit,buys
+<=30,high,no,notok,no
+<=30,high,no,ok,no
+31..40,high,no,notok,yes
+>40,medium,no,notok,yes
+>40,low,yes,notok,yes
+>40,low,yes,ok,no
+31..40,low,yes,ok,yes
+<=30,medium,no,notok,no
+<=30,low,yes,notok,yes
+>40,medium,yes,notok,yes
+<=30,medium,yes,ok,yes
+31..40,medium,no,ok,yes
+31..40,high,yes,notok,yes
+>40,medium,no,ok,no
