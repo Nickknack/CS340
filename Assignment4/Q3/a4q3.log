@@ -1,0 +1,144 @@
+Script started on Sun Nov 08 11:28:40 2015
+ 
+news: OpenSSH
+ 
+Script on hercules[1]% g++ -c N[K[K[K[K[K[Kls 
+NaiveBayes.cpp           car-unlabeled.txt        patterns.txt
+NaiveBayes.h             computer-labeled.txt     random100points.txt
+a4q3.log                 computer-unlabeled.txt   random956points.txt
+car-labeled.txt          main.cpp                 text.txt
+Script on hercules[2]% g++ -c NaiveBayes.cpp
+Script on hercules[3]% g++ -c NaiveBayes.cpp[K[K[K[K[K[K[K[K[K[K[K[K[K[Kmain.cpp
+Script on hercules[4]% g++ -c main.cpp[K[K[K[K[K[K[K[K[K[Kmain.o NaiveBayes.o -o a4q3
+Script on hercules[5]% ls
+NaiveBayes.cpp           car-labeled.txt          main.o
+NaiveBayes.h             car-unlabeled.txt        patterns.txt
+NaiveBayes.o             computer-labeled.txt     random100points.txt
+a4q3*                    computer-unlabeled.txt   random956points.txt
+a4q3.log                 main.cpp                 text.txt
+Script on hercules[6]% cat car-[K[K[K[Kcomputer-unlabeled.txt 
+<=30,medium,yes,notok
+31..40,high,yes,ok
+>40,high,no,ok
+<=30,low,no,ok
+31..40,medium,yes,notok
+>40,low,no,ok
+Script on hercules[7]% cat cat[Kr-unlabeled.txt 
+vhigh,vhigh,2,4,small,high
+vhigh,vhigh,4,2,big,low
+vhigh,vhigh,4,more,big,high
+vhigh,vhigh,5more,4,med,low
+vhigh,high,2,2,big,high
+vhigh,high,3,4,med,med
+vhigh,high,5more,4,small,low
+vhigh,med,2,4,med,high
+vhigh,med,3,more,small,high
+vhigh,med,5more,4,med,med
+vhigh,low,2,more,big,med
+vhigh,low,5more,4,med,high
+high,vhigh,3,2,small,low
+high,vhigh,4,4,med,med
+high,high,2,4,big,low
+high,high,3,4,big,med
+high,high,5more,4,big,high
+high,med,3,4,big,med
+high,med,5more,4,big,high
+high,low,4,2,small,med
+med,vhigh,2,2,med,med
+med,vhigh,2,more,big,med
+med,vhigh,5more,2,big,low
+med,high,3,4,small,med
+med,high,3,4,small,high
+med,high,4,more,small,high
+med,med,2,2,med,high
+med,med,2,4,small,high
+med,med,5more,2,small,low
+med,low,2,more,small,low
+med,low,3,more,small,high
+med,low,4,2,med,high
+med,low,5more,more,big,high
+med,low,5more,4,med,med
+med,low,5more,more,big,med
+med,low,5more,more,big,high
+low,high,3,4,big,high
+low,high,3,more,small,low
+low,high,3,more,small,med
+low,med,2,4,small,low
+low,med,2,4,small,med
+low,med,2,4,small,high
+low,med,5more,more,small,low
+low,med,5more,more,small,med
+low,med,5more,more,small,high
+low,low,4,4,small,high
+low,low,4,4,med,low
+low,low,4,4,med,med
+low,low,4,4,med,high
+Script on hercules[8]% a4q3
+Script on hercules[9]% ls
+NaiveBayes.cpp            car-labeled.txt           main.o
+NaiveBayes.h              car-unlabeled.txt         patterns.txt
+NaiveBayes.o              computer-classified.txt   random100points.txt
+a4q3*                     computer-labeled.txt      random956points.txt
+a4q3.log                  computer-unlabeled.txt    text.txt
+car-classified.txt        main.cpp
+Script on hercules[10]%	cat computer-classified.txt 
+<=30,medium,yes,notok,yes
+31..40,high,yes,ok,yes
+>40,high,no,ok,no
+<=30,low,no,ok,no
+31..40,medium,yes,notok,yes
+>40,low,no,ok,yes
+Script on hercules[11]%	co[Kat car-classified.txt 
+vhigh,vhigh,2,4,small,high,unacc
+vhigh,vhigh,4,2,big,low,unacc
+vhigh,vhigh,4,more,big,high,unacc
+vhigh,vhigh,5more,4,med,low,unacc
+vhigh,high,2,2,big,high,unacc
+vhigh,high,3,4,med,med,unacc
+vhigh,high,5more,4,small,low,unacc
+vhigh,med,2,4,med,high,unacc
+vhigh,med,3,more,small,high,unacc
+vhigh,med,5more,4,med,med,unacc
+vhigh,low,2,more,big,med,unacc
+vhigh,low,5more,4,med,high,unacc
+high,vhigh,3,2,small,low,unacc
+high,vhigh,4,4,med,med,unacc
+high,high,2,4,big,low,unacc
+high,high,3,4,big,med,unacc
+high,high,5more,4,big,high,unacc
+high,med,3,4,big,med,acc
+high,med,5more,4,big,high,acc
+high,low,4,2,small,med,unacc
+med,vhigh,2,2,med,med,unacc
+med,vhigh,2,more,big,med,unacc
+med,vhigh,5more,2,big,low,unacc
+med,high,3,4,small,med,unacc
+med,high,3,4,small,high,unacc
+med,high,4,more,small,high,unacc
+med,med,2,2,med,high,unacc
+med,med,2,4,small,high,unacc
+med,med,5more,2,small,low,unacc
+med,low,2,more,small,low,unacc
+med,low,3,more,small,high,unacc
+med,low,4,2,med,high,unacc
+med,low,5more,more,big,high,acc
+med,low,5more,4,med,med,acc
+med,low,5more,more,big,med,acc
+med,low,5more,more,big,high,acc
+low,high,3,4,big,high,unacc
+low,high,3,more,small,low,unacc
+low,high,3,more,small,med,unacc
+low,med,2,4,small,low,unacc
+low,med,2,4,small,med,unacc
+low,med,2,4,small,high,unacc
+low,med,5more,more,small,low,unacc
+low,med,5more,more,small,med,unacc
+low,med,5more,more,small,high,unacc
+low,low,4,4,small,high,unacc
+low,low,4,4,med,low,good
+low,low,4,4,med,med,good
+low,low,4,4,med,high,good
+Script on hercules[12]%	exit
+exit
+
+script done on Sun Nov 08 11:30:15 2015
