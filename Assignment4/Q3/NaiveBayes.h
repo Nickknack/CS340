@@ -4,9 +4,10 @@
 #include <stdio.h>
 #include <fstream>
 #include <string>
+#include <stdlib.h>
 using namespace std;
 
-struct UniqueValues
+struct UniqueVals
 {
     string value;
     int count;
@@ -23,7 +24,7 @@ private:
     int MAX_UNIQUE_VALUES;
     
     string** D;
-    UniqueValues** A;
+    UniqueVals** A;
     int*** C;
     float*** P;
     string* U;

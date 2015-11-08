@@ -1,0 +1,6 @@
+<=30,medium,yes,notok,yes
+31..40,high,yes,ok,yes
+>40,high,no,ok,no
+<=30,low,no,ok,no
+31..40,medium,yes,notok,yes
+>40,low,no,ok,yes

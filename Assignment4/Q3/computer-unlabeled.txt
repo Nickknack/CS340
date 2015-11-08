@@ -1,11 +1,6 @@
 <=30,medium,yes,notok
-
 31..40,high,yes,ok
-
 >40,high,no,ok
-
 <=30,low,no,ok
-
 31..40,medium,yes,notok
-
 >40,low,no,ok
