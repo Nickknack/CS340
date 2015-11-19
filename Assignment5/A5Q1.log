@@ -1,0 +1,922 @@
+Script started on Thu 19 Nov 2015 03:19:00 PM CST
+]0;Assignment5kowalchn@kowalchn-desktop:~/Dropbox/University/Computer Science/Computer Science 340/CS340/AAssignment5$ g++ main.cpp match.cpp -o match[K[A]0;Assignment5kowalchn@kowalchn-desktop:~/Dropbox/University/Computer Science/Computer Science 340/CS340/Assignment5$ g++ main.cpp match.cpp -o match
+]0;Assignment5kowalchn@kowalchn-desktop:~/Dropbox/University/Computer Science/Computer Science 340/CS340/Assignment5$ ./match
+
+Pattern matching on: Pro
+*****BRUTE FORCE****
+
+There are 7 matches.
+matches at:
+    position 0
+    position 454
+    position 517
+    position 698
+    position 1719
+    position 1736
+    position 1815
+1842 comparisons where made.
+
+
+*****BOYER-MOORE****
+
+There are 7 matches.
+matches at:
+    position 0
+    position 454
+    position 517
+    position 698
+    position 1719
+    position 1736
+    position 1815
+2527 comparisons where made.
+
+
+*****BOYER-MOORE (without Character Jump Heuristic)****
+
+There are 7 matches.
+matches at:
+    position 0
+    position 454
+    position 517
+    position 698
+    position 1719
+    position 1736
+    position 1815
+1883 comparisons where made.
+
+
+*****KNUTH-MORRIS-PRATT****
+
+There are 7 matches.
+matches at:
+    position 0
+    position 454
+    position 517
+    position 698
+    position 1719
+    position 1736
+    position 1815
+1837 comparisons where made.
+
+
+Pattern matching on: $$
+*****BRUTE FORCE****
+
+There are 19 matches.
+matches at:
+    position 9
+    position 12
+    position 68
+    position 122
+    position 176
+    position 230
+    position 283
+    position 338
+    position 394
+    position 450
+    position 530
+    position 533
+    position 591
+    position 616
+    position 674
+    position 694
+    position 1009
+    position 1012
+    position 1038
+1856 comparisons where made.
+
+
+*****BOYER-MOORE****
+
+There are 19 matches.
+matches at:
+    position 9
+    position 12
+    position 68
+    position 122
+    position 176
+    position 230
+    position 283
+    position 338
+    position 394
+    position 450
+    position 530
+    position 533
+    position 591
+    position 616
+    position 674
+    position 694
+    position 1009
+    position 1012
+    position 1038
+2768 comparisons where made.
+
+
+*****BOYER-MOORE (without Character Jump Heuristic)****
+
+There are 19 matches.
+matches at:
+    position 9
+    position 12
+    position 68
+    position 122
+    position 176
+    position 230
+    position 283
+    position 338
+    position 394
+    position 450
+    position 530
+    position 533
+    position 591
+    position 616
+    position 674
+    position 694
+    position 1009
+    position 1012
+    position 1038
+1856 comparisons where made.
+
+
+*****KNUTH-MORRIS-PRATT****
+
+There are 19 matches.
+matches at:
+    position 9
+    position 12
+    position 68
+    position 122
+    position 176
+    position 230
+    position 283
+    position 338
+    position 394
+    position 450
+    position 530
+    position 533
+    position 591
+    position 616
+    position 674
+    position 694
+    position 1009
+    position 1012
+    position 1038
+1857 comparisons where made.
+
+
+Pattern matching on: associated$$
+*****BRUTE FORCE****
+
+There are 0 matches.
+1909 comparisons where made.
+
+
+*****BOYER-MOORE****
+
+There are 0 matches.
+2043 comparisons where made.
+
+
+*****BOYER-MOORE (without Character Jump Heuristic)****
+
+There are 0 matches.
+1862 comparisons where made.
+
+
+*****KNUTH-MORRIS-PRATT****
+
+There are 0 matches.
+1887 comparisons where made.
+
+
+Pattern matching on: ;
+*****BRUTE FORCE****
+
+There are 36 matches.
+matches at:
+    position 482
+    position 495
+    position 511
+    position 527
+    position 757
+    position 789
+    position 818
+    position 837
+    position 896
+    position 910
+    position 936
+    position 973
+    position 992
+    position 1006
+    position 1071
+    position 1086
+    position 1101
+    position 1133
+    position 1219
+    position 1252
+    position 1273
+    position 1288
+    position 1315
+    position 1347
+    position 1377
+    position 1463
+    position 1515
+    position 1536
+    position 1554
+    position 1569
+    position 1586
+    position 1626
+    position 1682
+    position 1699
+    position 1713
+    position 1729
+1819 comparisons where made.
+
+
+*****BOYER-MOORE****
+
+There are 36 matches.
+matches at:
+    position 482
+    position 495
+    position 511
+    position 527
+    position 757
+    position 789
+    position 818
+    position 837
+    position 896
+    position 910
+    position 936
+    position 973
+    position 992
+    position 1006
+    position 1071
+    position 1086
+    position 1101
+    position 1133
+    position 1219
+    position 1252
+    position 1273
+    position 1288
+    position 1315
+    position 1347
+    position 1377
+    position 1463
+    position 1515
+    position 1536
+    position 1554
+    position 1569
+    position 1586
+    position 1626
+    position 1682
+    position 1699
+    position 1713
+    position 1729
+3602 comparisons where made.
+
+
+*****BOYER-MOORE (without Character Jump Heuristic)****
+
+There are 36 matches.
+matches at:
+    position 482
+    position 495
+    position 511
+    position 527
+    position 757
+    position 789
+    position 818
+    position 837
+    position 896
+    position 910
+    position 936
+    position 973
+    position 992
+    position 1006
+    position 1071
+    position 1086
+    position 1101
+    position 1133
+    position 1219
+    position 1252
+    position 1273
+    position 1288
+    position 1315
+    position 1347
+    position 1377
+    position 1463
+    position 1515
+    position 1536
+    position 1554
+    position 1569
+    position 1586
+    position 1626
+    position 1682
+    position 1699
+    position 1713
+    position 1729
+1819 comparisons where made.
+
+
+*****KNUTH-MORRIS-PRATT****
+
+There are 36 matches.
+matches at:
+    position 482
+    position 495
+    position 511
+    position 527
+    position 757
+    position 789
+    position 818
+    position 837
+    position 896
+    position 910
+    position 936
+    position 973
+    position 992
+    position 1006
+    position 1071
+    position 1086
+    position 1101
+    position 1133
+    position 1219
+    position 1252
+    position 1273
+    position 1288
+    position 1315
+    position 1347
+    position 1377
+    position 1463
+    position 1515
+    position 1536
+    position 1554
+    position 1569
+    position 1586
+    position 1626
+    position 1682
+    position 1699
+    position 1713
+    position 1729
+1855 comparisons where made.
+
+
+Pattern matching on: sort
+*****BRUTE FORCE****
+
+There are 6 matches.
+matches at:
+    position 125
+    position 541
+    position 584
+    position 638
+    position 686
+    position 1022
+1887 comparisons where made.
+
+
+*****BOYER-MOORE****
+
+There are 6 matches.
+matches at:
+    position 125
+    position 541
+    position 584
+    position 638
+    position 686
+    position 1022
+2404 comparisons where made.
+
+
+*****BOYER-MOORE (without Character Jump Heuristic)****
+
+There are 6 matches.
+matches at:
+    position 125
+    position 541
+    position 584
+    position 638
+    position 686
+    position 1022
+1899 comparisons where made.
+
+
+*****KNUTH-MORRIS-PRATT****
+
+There are 6 matches.
+matches at:
+    position 125
+    position 541
+    position 584
+    position 638
+    position 686
+    position 1022
+1874 comparisons where made.
+
+
+Pattern matching on: Sort
+*****BRUTE FORCE****
+
+There are 2 matches.
+matches at:
+    position 500
+    position 708
+1829 comparisons where made.
+
+
+*****BOYER-MOORE****
+
+There are 2 matches.
+matches at:
+    position 500
+    position 708
+2391 comparisons where made.
+
+
+*****BOYER-MOORE (without Character Jump Heuristic)****
+
+There are 2 matches.
+matches at:
+    position 500
+    position 708
+1899 comparisons where made.
+
+
+*****KNUTH-MORRIS-PRATT****
+
+There are 2 matches.
+matches at:
+    position 500
+    position 708
+1828 comparisons where made.
+
+
+Pattern matching on: End_
+*****BRUTE FORCE****
+
+There are 10 matches.
+matches at:
+    position 513
+    position 997
+    position 1266
+    position 1529
+    position 1547
+    position 1577
+    position 1690
+    position 1704
+    position 1715
+    position 1732
+1848 comparisons where made.
+
+
+*****BOYER-MOORE****
+
+There are 10 matches.
+matches at:
+    position 513
+    position 997
+    position 1266
+    position 1529
+    position 1547
+    position 1577
+    position 1690
+    position 1704
+    position 1715
+    position 1732
+2344 comparisons where made.
+
+
+*****BOYER-MOORE (without Character Jump Heuristic)****
+
+There are 10 matches.
+matches at:
+    position 513
+    position 997
+    position 1266
+    position 1529
+    position 1547
+    position 1577
+    position 1690
+    position 1704
+    position 1715
+    position 1732
+1849 comparisons where made.
+
+
+*****KNUTH-MORRIS-PRATT****
+
+There are 10 matches.
+matches at:
+    position 513
+    position 997
+    position 1266
+    position 1529
+    position 1547
+    position 1577
+    position 1690
+    position 1704
+    position 1715
+    position 1732
+1831 comparisons where made.
+
+
+Pattern matching on: whilst
+*****BRUTE FORCE****
+
+There are 0 matches.
+1829 comparisons where made.
+
+
+*****BOYER-MOORE****
+
+There are 0 matches.
+2227 comparisons where made.
+
+
+*****BOYER-MOORE (without Character Jump Heuristic)****
+
+There are 0 matches.
+1897 comparisons where made.
+
+
+*****KNUTH-MORRIS-PRATT****
+
+There are 0 matches.
+1832 comparisons where made.
+
+
+Pattern matching on: This program reads a series of words, each of which$$ has an associated page number.  The words are then
+*****BRUTE FORCE****
+
+There are 0 matches.
+1780 comparisons where made.
+
+
+*****BOYER-MOORE****
+
+There are 0 matches.
+1954 comparisons where made.
+
+
+*****BOYER-MOORE (without Character Jump Heuristic)****
+
+There are 0 matches.
+1821 comparisons where made.
+
+
+*****KNUTH-MORRIS-PRATT****
+
+There are 0 matches.
+1825 comparisons where made.
+
+
+Pattern matching on: ted
+*****BRUTE FORCE****
+
+There are 10 matches.
+matches at:
+    position 85
+    position 128
+    position 156
+    position 226
+    position 260
+    position 306
+    position 358
+    position 418
+    position 667
+    position 689
+1899 comparisons where made.
+
+
+*****BOYER-MOORE****
+
+There are 10 matches.
+matches at:
+    position 85
+    position 128
+    position 156
+    position 226
+    position 260
+    position 306
+    position 358
+    position 418
+    position 667
+    position 689
+2565 comparisons where made.
+
+
+*****BOYER-MOORE (without Character Jump Heuristic)****
+
+There are 10 matches.
+matches at:
+    position 85
+    position 128
+    position 156
+    position 226
+    position 260
+    position 306
+    position 358
+    position 418
+    position 667
+    position 689
+1871 comparisons where made.
+
+
+*****KNUTH-MORRIS-PRATT****
+
+There are 10 matches.
+matches at:
+    position 85
+    position 128
+    position 156
+    position 226
+    position 260
+    position 306
+    position 358
+    position 418
+    position 667
+    position 689
+1886 comparisons where made.
+
+
+Pattern matching on: I love CS340
+*****BRUTE FORCE****
+
+There are 1 matches.
+matches at:
+    position 1801
+1867 comparisons where made.
+
+
+*****BOYER-MOORE****
+
+There are 1 matches.
+matches at:
+    position 1801
+2113 comparisons where made.
+
+
+*****BOYER-MOORE (without Character Jump Heuristic)****
+
+There are 1 matches.
+matches at:
+    position 1801
+1824 comparisons where made.
+
+
+*****KNUTH-MORRIS-PRATT****
+
+There are 1 matches.
+matches at:
+    position 1801
+1849 comparisons where made.
+
+
+Pattern matching on: Page ( J ) := Pagelist
+*****BRUTE FORCE****
+
+There are 1 matches.
+matches at:
+    position 1229
+1875 comparisons where made.
+
+
+*****BOYER-MOORE****
+
+There are 1 matches.
+matches at:
+    position 1229
+2072 comparisons where made.
+
+
+*****BOYER-MOORE (without Character Jump Heuristic)****
+
+There are 1 matches.
+matches at:
+    position 1229
+1940 comparisons where made.
+
+
+*****KNUTH-MORRIS-PRATT****
+
+There are 1 matches.
+matches at:
+    position 1229
+1836 comparisons where made.
+
+
+Pattern matching on: :=
+*****BRUTE FORCE****
+
+There are 14 matches.
+matches at:
+    position 905
+    position 983
+    position 1062
+    position 1081
+    position 1096
+    position 1210
+    position 1240
+    position 1283
+    position 1301
+    position 1333
+    position 1363
+    position 1449
+    position 1482
+    position 1560
+1832 comparisons where made.
+
+
+*****BOYER-MOORE****
+
+There are 14 matches.
+matches at:
+    position 905
+    position 983
+    position 1062
+    position 1081
+    position 1096
+    position 1210
+    position 1240
+    position 1283
+    position 1301
+    position 1333
+    position 1363
+    position 1449
+    position 1482
+    position 1560
+2749 comparisons where made.
+
+
+*****BOYER-MOORE (without Character Jump Heuristic)****
+
+There are 14 matches.
+matches at:
+    position 905
+    position 983
+    position 1062
+    position 1081
+    position 1096
+    position 1210
+    position 1240
+    position 1283
+    position 1301
+    position 1333
+    position 1363
+    position 1449
+    position 1482
+    position 1560
+1837 comparisons where made.
+
+
+*****KNUTH-MORRIS-PRATT****
+
+There are 14 matches.
+matches at:
+    position 905
+    position 983
+    position 1062
+    position 1081
+    position 1096
+    position 1210
+    position 1240
+    position 1283
+    position 1301
+    position 1333
+    position 1363
+    position 1449
+    position 1482
+    position 1560
+1833 comparisons where made.
+
+
+Pattern matching on: ed
+*****BRUTE FORCE****
+
+There are 15 matches.
+matches at:
+    position 86
+    position 129
+    position 157
+    position 227
+    position 261
+    position 307
+    position 359
+    position 419
+    position 458
+    position 521
+    position 648
+    position 668
+    position 690
+    position 702
+    position 1723
+1927 comparisons where made.
+
+
+*****BOYER-MOORE****
+
+There are 15 matches.
+matches at:
+    position 86
+    position 129
+    position 157
+    position 227
+    position 261
+    position 307
+    position 359
+    position 419
+    position 458
+    position 521
+    position 648
+    position 668
+    position 690
+    position 702
+    position 1723
+2834 comparisons where made.
+
+
+*****BOYER-MOORE (without Character Jump Heuristic)****
+
+There are 15 matches.
+matches at:
+    position 86
+    position 129
+    position 157
+    position 227
+    position 261
+    position 307
+    position 359
+    position 419
+    position 458
+    position 521
+    position 648
+    position 668
+    position 690
+    position 702
+    position 1723
+1857 comparisons where made.
+
+
+*****KNUTH-MORRIS-PRATT****
+
+There are 15 matches.
+matches at:
+    position 86
+    position 129
+    position 157
+    position 227
+    position 261
+    position 307
+    position 359
+    position 419
+    position 458
+    position 521
+    position 648
+    position 668
+    position 690
+    position 702
+    position 1723
+1928 comparisons where made.
+
+
+Pattern matching on: ( I ) := Very_Large
+*****BRUTE FORCE****
+
+There are 2 matches.
+matches at:
+    position 1327
+    position 1443
+1892 comparisons where made.
+
+
+*****BOYER-MOORE****
+
+There are 2 matches.
+matches at:
+    position 1327
+    position 1443
+2103 comparisons where made.
+
+
+*****BOYER-MOORE (without Character Jump Heuristic)****
+
+There are 2 matches.
+matches at:
+    position 1327
+    position 1443
+1984 comparisons where made.
+
+
+*****KNUTH-MORRIS-PRATT****
+
+There are 2 matches.
+matches at:
+    position 1327
+    position 1443
+1834 comparisons where made.
+
+]0;Assignment5kowalchn@kowalchn-desktop:~/Dropbox/University/Computer Science/Computer Science 340/CS340/Assignment5$ exit
+exit
+
+Script done on Thu 19 Nov 2015 03:19:26 PM CST
