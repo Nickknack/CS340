@@ -1,7 +1,7 @@
 //***************************************************************************
 //Names: Nicholas Kowalchuk, Brayden Streibal, Evan Boyle
 //Created: November 25th, 2015
-//Last Modified: November 25th, 2015
+//Last Modified: November 28th, 2015
 //Purpose: Determine a random amount of tasks to accomplish and run them using
 //		   threads.
 //***************************************************************************
@@ -12,6 +12,7 @@ using namespace std;
 #include <iostream>
 #include <stdlib.h>
 #include "parallel.h"
+#include <semaphore.h>
 
 //the amount of tasks that will be created
 int maxTasks;
@@ -33,6 +34,11 @@ int d[(NO_OF_WORK_POOLS * NO_OF_WORKERS)+1];
 //emptyWorkPools is the amount of currently empty work pools
 int emptyWorkPools;
 
+//an array of semaphores for accessing the values of t
+sem_t s[NO_OF_WORK_POOLS+1];
+//a semephore for accessing the emptyWorkPools variable
+sem_t e;
+
 int main ()
 {
 	srand(time(NULL));
@@ -40,6 +46,17 @@ int main ()
 	//anywhere from 10 to 100
 	maxTasks = rand() % 100 + 10;
 
+	//initialize all of the s[i] semaphores
+	for (int i = 1; i <= NO_OF_WORK_POOLS; i++)
+	{
+		Init(&s[i]); 
+	}
+	//initalize the e semephore
+	Init(&e);
+
+
+	//call replicated workers with the first task being
+	//task 1.
 	ReplicatedWorkers(1);
 
 	cout << "End of the program has been reached" << endl << endl;

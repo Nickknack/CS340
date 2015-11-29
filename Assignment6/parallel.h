@@ -1,7 +1,7 @@
 //***************************************************************************
 //Names: Nicholas Kowalchuk, Brayden Streibal, Evan Boyle
 //Created: November 25th, 2015
-//Last Modified: November 25th, 2015
+//Last Modified: November 28th, 2015
 //Purpose: ReplicatedWorker and it's functions used to create threads
 //		   that will do work in parallel. 
 //***************************************************************************
@@ -10,6 +10,11 @@
 #define PARALLEL_H
 
 #include <iostream>
+#include <semaphore.h>
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 using namespace std;
 
 const int NO_OF_WORK_POOLS = 3;
@@ -38,6 +43,12 @@ extern int d[(NO_OF_WORK_POOLS * NO_OF_WORKERS)+1];
 //emptyWorkPools is the amount of currently empty work pools
 extern int emptyWorkPools;
 
+//an array of semaphores for accessing the values of t
+extern sem_t s[NO_OF_WORK_POOLS+1];
+//a semephore for accessing the emptyWorkPools variable
+extern sem_t e;
+
+
 
 //the amount of tasks that will
 //be created during the run of this program
@@ -50,6 +61,16 @@ void ReplicatedWorkers(int startTask);
 //Precondition(s): N/A
 //Return: N/A.
 //Side Effect: The tasks will be run and completed.
+
+void PutWork(int workerID, int task);
+
+void Init(sem_t *sem);
+
+void Destroy(sem_t *sem);
+
+void Lock(sem_t *sem);
+
+void Unlock(sem_t *sem);
 
 
 #endif
