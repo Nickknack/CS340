@@ -64,6 +64,8 @@ void ReplicatedWorkers(int startTask);
 
 void PutWork(int workerID, int task);
 
+void InsertTask(int workPoolID, int task);
+
 void Init(sem_t *sem);
 
 void Destroy(sem_t *sem);

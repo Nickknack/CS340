@@ -21,7 +21,8 @@ int maxTasks;
 //in the workpool i. When it is less than 0 it represents
 //the number of idle workers for that workpool. 
 int t[NO_OF_WORK_POOLS+1];
-//the amount of tasks that will be created
+//FIFO of tasks waiting to be executed;
+//essentially the workpools of tasks.
 int w[NO_OF_WORK_POOLS+1][LARGE_WORKPOOL_SIZE];
 //head and tail are the the indexes of the current
 //head and tail for each of the workpools w.

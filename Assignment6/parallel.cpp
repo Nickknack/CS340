@@ -65,6 +65,14 @@ void ReplicatedWorkers(int startTask)
 		{
 			cout << "The value of d[" << j << "] is: " << d[j] << endl;
 		}
+
+		cout << "The value of head[" << i << "] is: " << head[i] << endl;
+		cout << "The value of tail[" << i << "] is: " << tail[i] << endl;
+
+		for (int j = 0; j <= tail[i]; j++)
+		{
+			cout << "The value of w[" << i << "][" << j << "] is: " << w[i][j] << endl;
+		}
 	}
 	cout << "the value of emptyWorkPools: " << emptyWorkPools << endl << endl;
 }
@@ -104,11 +112,24 @@ void PutWork(int workerID, int task)
 	Unlock(&s[workPoolID]);
 	Unlock(&e);
 
-	//InsertTask function not created yet
-	//InsertTask(workPoolID, task);
+	InsertTask(workPoolID, task);
 
 	//increment the value of d so next time this worker adds a task it is to the next workpool
 	d[workerID] = workPoolID % NO_OF_WORK_POOLS + 1;
+}
+
+void InsertTask(int workPoolID, int task)
+{
+	//Before we can insert the task into the workpool we must first lock the semaphore that
+	//is used for controlling access to the workpool variables (semaphore s)
+	Lock(&s[workPoolID]);
+	//we are adding a value to a workpool; therefore we should increment the tail of that workpool
+	//to reflect this.
+	tail[workPoolID]++;
+	//add the task to the end of the FIFO workpool.
+	w[workPoolID][tail[workPoolID]] = task;
+	//since we are done modifying the workpools we can unlock s
+	Unlock(&s[workPoolID]);
 }
 
 
@@ -145,9 +166,10 @@ void Lock(sem_t *sem)
 
 void Unlock(sem_t *sem)
 {
-    if (sem_destroy (sem) == -1)
+    if (sem_post (sem) == -1)
     {
-        perror ("ERROR: Failed to destroy semaphore");
+    	cout << "ERROR: Thread failed to unlock semaphore" << endl << endl;
         exit (1);
     }
+    return;
 }
