@@ -10,6 +10,16 @@
 
 void ReplicatedWorkers(int startTask)
 {
+	int error; 
+	//allocate space for the workers count
+	tids = new pthread_t[(NO_OF_WORKERS * NO_OF_WORK_POOLS)];
+
+	if (tids == NULL)
+	{
+		perror ("Failed to allocate memory for thread IDs");
+        exit(1);
+	}
+
 	//For testing purposes. 
 	cout << "The value of startTask is: " << startTask << endl;
 	cout << "The value of maxTasks is: " << maxTasks << endl << endl;
@@ -75,6 +85,28 @@ void ReplicatedWorkers(int startTask)
 		}
 	}
 	cout << "the value of emptyWorkPools: " << emptyWorkPools << endl << endl;
+
+	//Create the workers (threads)
+	for (int i = 0; i < (NO_OF_WORK_POOLS * NO_OF_WORKERS); i++)
+	{
+		if (error = pthread_create (tids + i, NULL, TestFunc, &i))
+        {
+        	cout << "ERROR: Failed to create thread: " << (strerror(error)) << endl << endl;
+        	exit(1);
+        }
+	}
+
+	//join the workers (threads)
+	for (int i = 0; i < (NO_OF_WORK_POOLS * NO_OF_WORKERS); i++)
+	{
+		if (error = pthread_join (tids[i], NULL))
+        {
+        	cout << "ERROR: Failed to join thread: " << (strerror(error)) << endl << endl;
+        	exit(1);
+        }
+	}
+
+	delete [] tids;
 }
 
 void PutWork(int workerID, int task)
@@ -123,13 +155,27 @@ void InsertTask(int workPoolID, int task)
 	//Before we can insert the task into the workpool we must first lock the semaphore that
 	//is used for controlling access to the workpool variables (semaphore s)
 	Lock(&s[workPoolID]);
-	//we are adding a value to a workpool; therefore we should increment the tail of that workpool
-	//to reflect this.
-	tail[workPoolID]++;
+
+	//If the workpool is not empty, then we should increment the tail and add a new task to the workpool
+	//otherwise if it is empty we don't need to increment tail as we are replacing the empty with the new task.
+	if (w[workPoolID][tail[workPoolID]] != EMPTY)
+	{
+		tail[workPoolID]++;
+	}
 	//add the task to the end of the FIFO workpool.
 	w[workPoolID][tail[workPoolID]] = task;
 	//since we are done modifying the workpools we can unlock s
 	Unlock(&s[workPoolID]);
+}
+
+void *TestFunc(void *id)
+{
+	int *input_id = (int *) id;
+	Lock(&o);
+	cout << "I am a worker number " << *input_id << endl << endl;
+	Unlock(&o);
+
+	return NULL;
 }
 
 

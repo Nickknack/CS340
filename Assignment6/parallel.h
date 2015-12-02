@@ -14,11 +14,13 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <cstring>
 
 using namespace std;
 
 const int NO_OF_WORK_POOLS = 3;
 const int NO_OF_WORKERS = 5;
+const int NO_MORE_WORK = -777;
 const int EMPTY = -999;
 //since the amount of tasks being generated is between 10 and 100
 //there will never be 500 tasks in a workpool; so 500
@@ -47,6 +49,10 @@ extern int emptyWorkPools;
 extern sem_t s[NO_OF_WORK_POOLS+1];
 //a semephore for accessing the emptyWorkPools variable
 extern sem_t e;
+//a semephore for accessing printing to the output. 
+extern sem_t o;
+
+extern pthread_t *tids;
 
 
 
@@ -65,6 +71,8 @@ void ReplicatedWorkers(int startTask);
 void PutWork(int workerID, int task);
 
 void InsertTask(int workPoolID, int task);
+
+void *TestFunc(void *id);
 
 void Init(sem_t *sem);
 

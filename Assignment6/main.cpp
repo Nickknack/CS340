@@ -39,6 +39,10 @@ int emptyWorkPools;
 sem_t s[NO_OF_WORK_POOLS+1];
 //a semephore for accessing the emptyWorkPools variable
 sem_t e;
+//a semephore for accessing printing to the output. 
+sem_t o;
+
+pthread_t *tids;
 
 int main ()
 {
@@ -54,11 +58,20 @@ int main ()
 	}
 	//initalize the e semephore
 	Init(&e);
-
+	//initalize the o semaphore
+	Init(&o);
 
 	//call replicated workers with the first task being
 	//task 1.
 	ReplicatedWorkers(1);
+
+	//Before the program ends we need to destroy the semephores we created. 
+	for (int i = 1; i <= NO_OF_WORK_POOLS; i++)
+	{
+		Destroy(&s[i]); 
+	}
+	Destroy(&e);
+	Destroy(&o);
 
 	cout << "End of the program has been reached" << endl << endl;
 	return 0;
