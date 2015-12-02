@@ -1,7 +1,7 @@
 //***************************************************************************
 //Names: Nicholas Kowalchuk, Brayden Streibal, Evan Boyle
 //Created: November 25th, 2015
-//Last Modified: November 28th, 2015
+//Last Modified: December 1st, 2015
 //Purpose: Determine a random amount of tasks to accomplish and run them using
 //		   threads.
 //***************************************************************************

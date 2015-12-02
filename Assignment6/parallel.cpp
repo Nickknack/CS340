@@ -1,8 +1,9 @@
 //***************************************************************************
 //Names: Nicholas Kowalchuk, Brayden Streibal, Evan Boyle
 //Created: November 25th, 2015
-//Last Modified: November 28th, 2015
-//Purpose: 
+//Last Modified: December 1st, 2015
+//Purpose: ReplicatedWorker and it's functions used to create threads
+//		   that will do work in parallel. 
 //***************************************************************************
 
 #include "parallel.h"
@@ -168,6 +169,7 @@ void InsertTask(int workPoolID, int task)
 	Unlock(&s[workPoolID]);
 }
 
+//Just a test function placeholder for the thread creates
 void *TestFunc(void *id)
 {
 	int *input_id = (int *) id;

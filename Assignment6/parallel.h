@@ -1,7 +1,7 @@
 //***************************************************************************
 //Names: Nicholas Kowalchuk, Brayden Streibal, Evan Boyle
 //Created: November 25th, 2015
-//Last Modified: November 28th, 2015
+//Last Modified: December 1st, 2015
 //Purpose: ReplicatedWorker and it's functions used to create threads
 //		   that will do work in parallel. 
 //***************************************************************************
@@ -69,18 +69,51 @@ void ReplicatedWorkers(int startTask);
 //Side Effect: The tasks will be run and completed.
 
 void PutWork(int workerID, int task);
+//purpose: Puts work into a workpool
+//Parameter(s): an integer called workerID which indicates the worker who is putting the task into
+//				the workpool and an integer called task which is the task to be inserted
+//Precondition(s): N/A
+//Return: N/A.
+//Side Effect: Ta task will be put into the appropriate workpool
 
 void InsertTask(int workPoolID, int task);
+//purpose: Called by PutWork; Puts the task into the appropriate workpool.
+//Parameter(s): an integer called workPoolID which indicates the workpool the task
+//				is to be inserted into and an integer called task which is
+//				the task to be inserted.
+//Precondition(s): N/A
+//Return: N/A.
+//Side Effect: The task will be put into the appropriate workpool
 
 void *TestFunc(void *id);
+//A placeholder function
 
 void Init(sem_t *sem);
+//purpose: Initalizes a semaphore
+//Parameter(s): a sem_t pointer that is the semaphore to be initalized
+//Precondition(s): N/A
+//Return: N/A.
+//Side Effect: The semaphore will be initalized 
 
 void Destroy(sem_t *sem);
+//purpose: Destroys a semaphore
+//Parameter(s): a sem_t pointer that is the semaphore to be destroyed
+//Precondition(s): The semaphore has been initalized
+//Return: N/A.
+//Side Effect: The semaphore will be destroyed 
 
 void Lock(sem_t *sem);
+//purpose: Locks a semaphore
+//Parameter(s): a sem_t pointer that is the semaphore to be locked
+//Precondition(s): The semaphore has been initialized 
+//Return: N/A.
+//Side Effect: The semaphore will be locked
 
 void Unlock(sem_t *sem);
-
+//purpose: Unlocks a semaphore
+//Parameter(s): a sem_t pointer that is the semaphore to be locked
+//Precondition(s): The semaphore has been initalized 
+//Return: N/A.
+//Side Effect: The semaphore will be Unlocked
 
 #endif
