@@ -116,4 +116,22 @@ void Unlock(sem_t *sem);
 //Return: N/A.
 //Side Effect: The semaphore will be Unlocked
 
+void *Worker(void* id);
+//purpose: The function for the threads; essentially the function
+//			That dictates what the threads will do.
+//Parameter(s): a void argument passed in from the thread create
+//				which is the id of the thread. 
+//Precondition(s): A thread calls this function
+//Return: N/A.
+//Side Effect: Work will be created and completed until there 
+//			   is no more work
+
+int GetWork(int workerID);
+//purpose: This function gets work from the workpools
+//Parameter(s): an int called workerID which indicates which
+//				worker is requesting a task from the workpool
+//Precondition(s): N/A
+//Return: an integer which is the task to do.
+//Side Effect: a task will be removed from the workpool
+
 #endif

@@ -180,6 +180,79 @@ void *TestFunc(void *id)
 	return NULL;
 }
 
+void *Worker(void* id)
+{
+	int task;
+	int *workerID = (int *) id);
+
+	task = GetWork(*workerID);
+	while (task != NO_MORE_WORK)
+	{
+		//DoWork not implemented yet
+		//DoWork(workerID, task);
+		task = GetWork(*workerID);
+	}
+}
+
+int GetWork(int workerID)
+{
+	int Task;
+
+	//Determine what workPool the worker works with
+	workPoolID = ((workerID - 1) / NO_OF_WORKERS) + 1;
+
+	//The workpool associated with the calculated workPoolID
+	//will be modified as well as the emptyWorkPools variable
+	//so we need to lock the semaphores for these. 
+	Lock(&s[workPoolID]);
+	Lock(&e);
+
+	//We are trying to get task from the workpool, so we should
+	//decrement the appropriate t. This means that if there are
+	//tasks in the workpool t will now represent how many are
+	//in the workpool after one has been removed. If no tasks
+	//in the workpool then the new value will represent the amount
+	//of idle workers.
+	t[workPoolID]--;
+	idleWorkers = t[workPoolID];
+
+	//If all of the workers are idle then we have an
+	//empty workpool and should increment the variable. 
+	if (idleWorkers == -NO_OF_WORKERS)
+	{
+		emptyWorkPools++;
+
+		//If all of the workpools are empty then
+		//we need to fill the workpools with the NO_MORE_WORK
+		//signal to signify there will no longer be any work
+		//and that we are done.
+		if (emptyWorkPools == NO_OF_WORK_POOLS)
+		{
+			Unlock(&e);
+			Unlock(&s[workPoolID]);
+
+			for (int i = 1; i <= NO_OF_WORKERS)
+			{
+				InsertTask(i, NO_MORE_WORK)
+			}
+		}
+		else
+		{
+			Unlock(&e);
+			Unlock(&s[workPoolID]);
+		}
+	}
+	else
+	{
+		Unlock(&e);
+		Unlock(&s[workPoolID]);
+	}
+
+	//Remove the next task from the workpool and return the value.
+	task = RemoveTask(workPoolID);
+	return (task);
+}
+
 
 //******Semaphore functions***********
 void Init(sem_t *sem)
