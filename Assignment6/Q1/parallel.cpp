@@ -13,17 +13,13 @@ void ReplicatedWorkers(int startTask)
 {
 	int error; 
 	//allocate space for the workers count
-	tids = new pthread_t[(NO_OF_WORKERS * NO_OF_WORK_POOLS)];
+	tids = new pthread_t[(NO_OF_WORKERS * NO_OF_WORK_POOLS) + 1];
 
 	if (tids == NULL)
 	{
 		perror ("Failed to allocate memory for thread IDs");
         exit(1);
 	}
-
-	//For testing purposes. 
-	cout << "The value of startTask is: " << startTask << endl;
-	cout << "The value of maxTasks is: " << maxTasks << endl << endl;
 
 	for (int i = 1; i <= NO_OF_WORK_POOLS; i++)
 	{
@@ -49,48 +45,12 @@ void ReplicatedWorkers(int startTask)
 	//initalize the value of emptyWorkPools to 0
 	emptyWorkPools = 0;
 
-	//***FOR TESTING***//
-	for (int i = 1; i <= NO_OF_WORK_POOLS; i++)
-	{
-		cout << "The value of t[" << i << "] is: " << t[i] << endl;
-		cout << "The value of w[" << i <<"][0] is: " << w[i][0] << endl;
-
-		for (int j = ((i - 1) * NO_OF_WORKERS + 1); j <= (i * NO_OF_WORKERS); j++)
-		{
-			cout << "The value of d[" << j << "] is: " << d[j] << endl;
-		}
-
-		cout << "The value of head[" << i << "] is: " << head[i] << endl;
-		cout << "The value of tail[" << i << "] is: " << tail[i] << endl;
-	}
-	cout << "the value of emptyWorkPools: " << emptyWorkPools << endl << endl;
-
 	PutWork(1, startTask);
 
-	//*****FOR TESTING*******
-	for (int i = 1; i <= NO_OF_WORK_POOLS; i++)
-	{
-		cout << "The value of t[" << i << "] is: " << t[i] << endl;
-
-		for (int j = ((i - 1) * NO_OF_WORKERS + 1); j <= (i * NO_OF_WORKERS); j++)
-		{
-			cout << "The value of d[" << j << "] is: " << d[j] << endl;
-		}
-
-		cout << "The value of head[" << i << "] is: " << head[i] << endl;
-		cout << "The value of tail[" << i << "] is: " << tail[i] << endl;
-
-		for (int j = 0; j <= tail[i]; j++)
-		{
-			cout << "The value of w[" << i << "][" << j << "] is: " << w[i][j] << endl;
-		}
-	}
-	cout << "the value of emptyWorkPools: " << emptyWorkPools << endl << endl;
-
 	//Create the workers (threads)
-	for (int i = 0; i < (NO_OF_WORK_POOLS * NO_OF_WORKERS); i++)
+	for (int i = 1; i <= (NO_OF_WORK_POOLS * NO_OF_WORKERS); i++)
 	{
-		if (error = pthread_create (tids + i, NULL, TestFunc, &i))
+		if (error = pthread_create (&tids[i], NULL, &Worker, (void *)i))
         {
         	cout << "ERROR: Failed to create thread: " << (strerror(error)) << endl << endl;
         	exit(1);
@@ -98,7 +58,7 @@ void ReplicatedWorkers(int startTask)
 	}
 
 	//join the workers (threads)
-	for (int i = 0; i < (NO_OF_WORK_POOLS * NO_OF_WORKERS); i++)
+	for (int i = 1; i <= (NO_OF_WORK_POOLS * NO_OF_WORKERS); i++)
 	{
 		if (error = pthread_join (tids[i], NULL))
         {
@@ -116,6 +76,17 @@ void PutWork(int workerID, int task)
 	//the worker being passed in.
 	int workPoolID = d[workerID];
 	int idleWorkers;
+
+	Lock(&o);
+	if (task == 1)
+	{
+		cout << "pid: " << pid << " has created task: " << task << " in workPoolID: " << workPoolID << endl;
+	}
+	else
+	{
+		cout << "WorkerID: " << workerID << " has created task: " << task << " in workPoolID: " << workPoolID << endl;
+	}
+	Unlock(&o);
 
 	//While we are putting work into the workpool lock the t for the workpool we are 
 	//working with and lock e.
@@ -148,7 +119,7 @@ void PutWork(int workerID, int task)
 	InsertTask(workPoolID, task);
 
 	//increment the value of d so next time this worker adds a task it is to the next workpool
-	d[workerID] = workPoolID % NO_OF_WORK_POOLS + 1;
+	d[workerID] = (workPoolID % NO_OF_WORK_POOLS) + 1;
 }
 
 void InsertTask(int workPoolID, int task)
@@ -156,25 +127,20 @@ void InsertTask(int workPoolID, int task)
 	//Before we can insert the task into the workpool we must first lock the semaphore that
 	//is used for controlling access to the workpool variables (semaphore s)
 	Lock(&s[workPoolID]);
-
-	//If the workpool is not empty, then we should increment the tail and add a new task to the workpool
-	//otherwise if it is empty we don't need to increment tail as we are replacing the empty with the new task.
-	if (w[workPoolID][tail[workPoolID]] != EMPTY)
-	{
-		tail[workPoolID]++;
-	}
+	tail[workPoolID]++;
+	
 	//add the task to the end of the FIFO workpool.
 	w[workPoolID][tail[workPoolID]] = task;
 	//since we are done modifying the workpools we can unlock s
 	Unlock(&s[workPoolID]);
 }
 
-//Just a test function placeholder for the thread creates
-void *TestFunc(void *id)
+void *TestFunc(void* id)
 {
-	int *input_id = (int *) id;
+	int workerID = (int) id;
+
 	Lock(&o);
-	cout << "I am a worker number " << *input_id << endl << endl;
+	cout << "The workerID is: " << workerID << endl;
 	Unlock(&o);
 
 	return NULL;
@@ -183,20 +149,30 @@ void *TestFunc(void *id)
 void *Worker(void* id)
 {
 	int task;
-	int *workerID = (int *) id);
+	int noOfTasks;
+	int workerID = (int) id;
 
-	task = GetWork(*workerID);
+	//each task will create a certain amount of tasks at maximum.
+	//this number will be between 1 and 10
+	noOfTasks = (rand() % 10) + 1;
+
+	task = GetWork(workerID);
+
+	//while there is still work to do, continue doing work.
 	while (task != NO_MORE_WORK)
 	{
-		//DoWork not implemented yet
-		//DoWork(workerID, task);
-		task = GetWork(*workerID);
+		DoWork(workerID, task, noOfTasks);
+		task = GetWork(workerID);
 	}
+
+	Lock(&o);
+	cout << "workerID: " << workerID << " has terminated." << endl;
+	Unlock(&o);
 }
 
 int GetWork(int workerID)
 {
-	int Task;
+	int task, workPoolID, idleWorkers;
 
 	//Determine what workPool the worker works with
 	workPoolID = ((workerID - 1) / NO_OF_WORKERS) + 1;
@@ -231,9 +207,12 @@ int GetWork(int workerID)
 			Unlock(&e);
 			Unlock(&s[workPoolID]);
 
-			for (int i = 1; i <= NO_OF_WORKERS)
+			for (int i = 1; i <= NO_OF_WORK_POOLS; i++)
 			{
-				InsertTask(i, NO_MORE_WORK)
+				for (int j = 1; j <= NO_OF_WORKERS; j++)
+				{
+					InsertTask(i, NO_MORE_WORK);
+				}
 			}
 		}
 		else
@@ -253,6 +232,66 @@ int GetWork(int workerID)
 	return (task);
 }
 
+void DoWork(int workerID, int task, int& noOfTasks)
+{
+	int workPoolID;
+	struct timespec sleeptime;
+	int nextTask = task;
+
+	//initalize the sleep amount to a random amount from 0 to 10 for the seconds and any random amount
+	//for the nano seconds. 
+	sleeptime.tv_sec = rand() % 10;
+    sleeptime.tv_nsec = rand();
+
+	workPoolID = ((workerID - 1) / NO_OF_WORKERS) + 1;
+
+	Lock(&o);
+	cout << "WorkerID: " << workerID << " has started task: " << task << " from workPoolID: " << workPoolID << endl;
+	Unlock(&o);
+
+	//If the worker hasn't reached it's maximum amount of tasks created yet then create a task.
+	if (noOfTasks > 0)
+	{
+		nextTask++;
+		PutWork(workerID, nextTask);
+		noOfTasks--;
+	}
+
+	//sleep for the amount decided at random
+    nanosleep (&sleeptime, NULL);
+
+	Lock(&o);
+	cout << "WorkerID: " << workerID << " has finished task: " << task << " from workPoolID: " << workPoolID << endl;
+	Unlock(&o);
+}
+
+int RemoveTask(int workPoolID)
+{
+	int task;
+
+	Lock(&s[workPoolID]);
+
+	//Loop until there is work in the work pool to do
+	while (1)
+	{
+		if (w[workPoolID][tail[workPoolID]] == EMPTY)
+		{
+			Unlock(&s[workPoolID]);
+		}
+		else
+		{
+			break;
+		}
+		Lock(&s[workPoolID]);
+	}
+
+	//Get the work from the workpool
+	head[workPoolID]++;
+	task = w[workPoolID][head[workPoolID]];
+	w[workPoolID][head[workPoolID]] = EMPTY;
+	Unlock(&s[workPoolID]);
+	return task;
+}
 
 //******Semaphore functions***********
 void Init(sem_t *sem)

@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <cstring>
+#include <time.h>
 
 using namespace std;
 
@@ -22,11 +23,12 @@ const int NO_OF_WORK_POOLS = 3;
 const int NO_OF_WORKERS = 5;
 const int NO_MORE_WORK = -777;
 const int EMPTY = -999;
-//since the amount of tasks being generated is between 10 and 100
-//there will never be 500 tasks in a workpool; so 500
+//since the amount of tasks being generated is at maximum 5 for each worker
+//that means there will never be more than 75 tasks created
+//there will never be 500 tasks in a workpool; so 200
 //is a safe size to make the workpool arrays where we are working
 //with essentially inifitly large workpools.
-const int LARGE_WORKPOOL_SIZE = 500;
+const int LARGE_WORKPOOL_SIZE = 2000;
 
 //when t[i] >= 0 it represents the number of tasks
 //in the workpool i. When it is less than 0 it represents
@@ -51,6 +53,9 @@ extern sem_t s[NO_OF_WORK_POOLS+1];
 extern sem_t e;
 //a semephore for accessing printing to the output. 
 extern sem_t o;
+
+//the id of the parent thread
+extern pthread_t pid;
 
 extern pthread_t *tids;
 
@@ -133,5 +138,26 @@ int GetWork(int workerID);
 //Precondition(s): N/A
 //Return: an integer which is the task to do.
 //Side Effect: a task will be removed from the workpool
+
+void DoWork(int workerID, int task, int& noOfTasks);
+//purpose: This function gets does the work that the worker is supposed to do
+//		   In this instance it just sleeps for a random amount
+//	       of time and creates another task.
+//Parameter(s): an int called workerID which indicates which
+//				worker is doing the work.
+//				an int called task which is the task which is being done.
+//				an int called noOfTasks which keeps track of the
+//				maximum amount of tasks that this worker can make. 
+//Precondition(s): N/A
+//Return: N/A
+//Side Effect: a task will be done and tasks will be added to the workpools
+
+int RemoveTask(int workPoolID);
+//purpose: This function removes a task from the workpools
+//Parameter(s): an int called workerPoolID which indicates the workpool
+//				in which the task will be removed from.
+//Precondition(s): N/A
+//Return: an int which represents the removed task
+//Side Effect: a task will be removed from the appropriate workpool
 
 #endif

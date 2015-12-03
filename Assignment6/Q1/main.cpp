@@ -14,9 +14,6 @@ using namespace std;
 #include "parallel.h"
 #include <semaphore.h>
 
-//the amount of tasks that will be created
-int maxTasks;
-
 //when t[i] >= 0 it represents the number of tasks
 //in the workpool i. When it is less than 0 it represents
 //the number of idle workers for that workpool. 
@@ -42,14 +39,14 @@ sem_t e;
 //a semephore for accessing printing to the output. 
 sem_t o;
 
+pthread_t pid;
+
 pthread_t *tids;
 
 int main ()
 {
+	//seed random
 	srand(time(NULL));
-	//a random amount of tasks will be generated
-	//anywhere from 10 to 100
-	maxTasks = rand() % 100 + 10;
 
 	//initialize all of the s[i] semaphores
 	for (int i = 1; i <= NO_OF_WORK_POOLS; i++)
@@ -60,6 +57,10 @@ int main ()
 	Init(&e);
 	//initalize the o semaphore
 	Init(&o);
+
+	pid = pthread_self ();
+
+	cout << "pid: " << pid << " has started." << endl;
 
 	//call replicated workers with the first task being
 	//task 1.
@@ -73,6 +74,7 @@ int main ()
 	Destroy(&e);
 	Destroy(&o);
 
-	cout << "End of the program has been reached" << endl << endl;
+
+	cout << "pid: " << pid << " has terminated." << endl << endl;
 	return 0;
 }
